@@ -46,7 +46,9 @@
                     <h4 class="card-title">Input Item Paket </h4>
                     <form action="" method="post">
                         <label for="nama_paket" class="form-label">Nama Paket</label>
-                        <input type="text" class="form-control" id="nama_paket" placeholder="Mark" required><br>
+                        <select name="item" id="item" class="form-select">
+
+                        </select><br>
                         <label for="harga_perkilo" class="form-label">Harga Perkilo</label>
                         <input type="text" class="form-control" id="harga_perkilo" placeholder="Mark" required><br>
                         <label for="jumlah_hari" class="form-label">Jumlah Hari</label>
@@ -127,4 +129,9 @@
     <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+
+    <script>
+        let url = `{{ url('/') }}`;
+    </script>
+    <script src="{{ asset('assets/js/item_paket.js') }}"></script>
 @endsection

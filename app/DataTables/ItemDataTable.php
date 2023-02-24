@@ -23,8 +23,11 @@ class ItemDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'item.action')
-            ->setRowId('id');
+            ->addColumn('action', function ($data) {
+                $csrf =  csrf_token();
+                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'> edit</button>&nbsp;<form method='POST' action='/item_laundry/delete/" . $data->id . "' class='d-inline'> <input type='hidden' name='_token' value='" . $csrf . "'/>
+                <input type='hidden' name='_method' value='DELETE'/><button type='submit' class='btn btn-danger btn-sm' onclick='return confirm(`are you sure?`)'>hapus</button></form>";
+            });
     }
 
     /**
@@ -35,7 +38,7 @@ class ItemDataTable extends DataTable
      */
     public function query(Item $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->orderBy('id');
     }
 
     /**
@@ -61,9 +64,14 @@ class ItemDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            'id',
-            'name_item',
-            'hitungan',
+            Column::make('id'),
+            Column::make('name_item'),
+            Column::make('hitungan'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(100)
+                ->addClass("text-center")
         ];
     }
 

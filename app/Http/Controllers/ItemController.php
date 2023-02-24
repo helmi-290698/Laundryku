@@ -36,7 +36,13 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name_item' => 'required|max:255',
+            'hitungan' => 'required'
+        ]);
+
+        Item::create($validatedData);
+        return redirect('/item_laundry');
     }
 
     /**
@@ -47,7 +53,9 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        $data = Item::all();
+
+        return $data;
     }
 
     /**
@@ -56,9 +64,10 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function edit(request $id)
     {
-        //
+        $data = Item::find($id->id);
+        return $data;
     }
 
     /**
@@ -68,9 +77,14 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name_item' => 'required|max:255',
+            'hitungan' => 'required'
+        ]);
+        Item::where("id", $request->id_item)->update($validatedData);
+        return redirect('/item_laundry');
     }
 
     /**
@@ -79,8 +93,9 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy($post)
     {
-        //
+        Item::destroy($post);
+        return redirect('/item_laundry');
     }
 }

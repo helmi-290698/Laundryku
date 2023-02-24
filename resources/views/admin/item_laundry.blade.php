@@ -43,16 +43,32 @@
         <div class="col-sm-12 col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post">
-                        <label for="nama_paket" class="form-label">Nama Item Laundry</label>
-                        <input type="text" class="form-control" id="nama_paket" placeholder="Nama Item Laundry"
-                            required><br>
+                    <form action="{{ url('/item_laundry/store') }}" method="post">
+                        @csrf
+                        <label for="name_item" class="form-label">Nama Item Laundry</label>
+                        <input type="text"
+                            class="form-control @error('name_item')
+                            is-invalid
+                        @enderror"
+                            name="name_item" id="name_item" placeholder="Nama Item Laundry">
+                        @error('name_item')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <br>
                         <label for="hitungan" class="form-label">Hitungan</label>
-                        <select name="" id="" class="form-select">
+                        <select name="hitungan" id="hitungan"
+                            class="form-select @error('hitungan')
+                            is-invalid
+                        @enderror">
+                            <option value=" ">--pilih--</option>
                             <option value="peritem">Per Item</option>
                             <option value="permeter">Per Meter</option>
                             <option value="perkilo">Per Kilo</option>
-                        </select><br>
+                        </select>
+                        @error('hitungan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <br>
                         <button type="submit" class="btn btn-primary"> Simpan </button>
 
                     </form>
@@ -75,6 +91,39 @@
 
                 </div>
             </div>
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="{{ url('/item_laundry/edit') }}" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Edit Item Laundry
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                @csrf
+                                <input type="hidden" name="id_item" class="form-control" id="id_item"><br>
+                                <label for="nama_item">Nama Item</label>
+                                <input type="text" name="name_item" class="form-control" id="nama_item" required><br>
+                                <label for="hitungan">Hitungan</label>
+                                <select name="hitungan" id="hitungan_select" class="form-select" required>
+                                    <option value="peritem">Per Item</option>
+                                    <option value="permeter">Per Meter</option>
+                                    <option value="perkilo">Per Kilo</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
         </div>
 
     </div> <!-- end col -->
@@ -94,6 +143,10 @@
     <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+    <script>
+        let url = `{{ url('/') }}`;
+    </script>
+    <script src="{{ asset('assets/js/item_laundry.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
