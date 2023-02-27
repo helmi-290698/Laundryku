@@ -44,15 +44,17 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Input Item Paket </h4>
-                    <form action="" method="post">
+                    <form action="{{ url('/item_paket') }}" method="post" id="form-tambah-item-paket">
+                        @csrf
                         <label for="nama_paket" class="form-label">Nama Paket</label>
-                        <select name="item" id="item" class="form-select">
+                        <select name="id_item" id="item" class="form-select">
 
                         </select><br>
-                        <label for="harga_perkilo" class="form-label">Harga Perkilo</label>
-                        <input type="text" class="form-control" id="harga_perkilo" placeholder="Mark" required><br>
-                        <label for="jumlah_hari" class="form-label">Jumlah Hari</label>
-                        <input type="text" class="form-control" id="jumlah_hari" placeholder="Mark" required>
+                        <span class="text-danger text-error id_item_error"></span>
+                        <div id="harga">
+
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
                     </form>
 
                 </div>
@@ -68,43 +70,7 @@
 
 
 
-                    <table id="datatable" class="table table-bordered dt-responsive nowrap"
-                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-
-                        <thead>
-                            <tr>
-                                <th>No </th>
-                                <th>Nama Paket</th>
-                                <th>Jumlah Hari</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-
-
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-
-                            </tr>
-                        </tbody>
-                    </table>
+                    {!! $dataTable->table() !!}
 
 
 
@@ -134,4 +100,10 @@
         let url = `{{ url('/') }}`;
     </script>
     <script src="{{ asset('assets/js/item_paket.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
+    {!! $dataTable->scripts() !!}
 @endsection

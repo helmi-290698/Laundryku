@@ -69,7 +69,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                         <br>
-                        <button type="submit" class="btn btn-primary"> Simpan </button>
+                        <button type="submit" class="btn btn-primary btn-sm"> Simpan </button>
 
                     </form>
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItempaketController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Item;
 use Illuminate\Support\Facades\Route;
@@ -28,9 +29,11 @@ Route::get('/dashboard', function () {
 Route::get('/datalaundry', function () {
     return view('admin.datalaundry');
 })->middleware(['auth', 'verified'])->name('datalaundry');
-Route::get('/item_paket', function () {
-    return view('admin.item_paket');
-})->middleware(['auth', 'verified'])->name('item_paket');
+Route::middleware('auth')->group(function () {
+    Route::get('/item_paket', [ItempaketController::class, 'index'])->middleware(['auth', 'verified'])->name('item_paket');
+    Route::post('/item_paket', [ItempaketController::class, 'store'])->middleware(['auth', 'verified'])->name('create_item_paket');
+});
+Route::get('/item_paket', [ItempaketController::class, 'index'])->middleware(['auth', 'verified'])->name('item_paket');
 Route::get('/item_laundry', [ItemController::class, 'index'])->middleware(['auth', 'verified'])->name('item_laundry');
 Route::get('/item_laundry/find', [ItemController::class, 'edit'])->middleware(['auth', 'verified'])->name('item_laundry_find');
 Route::get('/item_laundry/show', [ItemController::class, 'show'])->middleware(['auth', 'verified'])->name('item_laundry_show');

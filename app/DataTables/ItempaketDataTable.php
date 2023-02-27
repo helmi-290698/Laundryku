@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Item;
+use App\Models\Itempaket;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ItemDataTable extends DataTable
+class ItempaketDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -26,19 +26,19 @@ class ItemDataTable extends DataTable
             ->addColumn('action', function ($data) {
                 $csrf =  csrf_token();
                 return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'> edit</button>&nbsp;<form method='POST' action='/item_laundry/delete/" . $data->id . "' class='d-inline'> <input type='hidden' name='_token' value='" . $csrf . "'/>
-                <input type='hidden' name='_method' value='DELETE'/><button type='submit' class='btn btn-danger btn-sm' onclick='return confirm(`are you sure?`)'>hapus</button></form>";
+            <input type='hidden' name='_method' value='DELETE'/><button type='submit' class='btn btn-danger btn-sm' onclick='return confirm(`are you sure?`)'>hapus</button></form>";
             });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Item $model
+     * @param \App\Models\Itempaket $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Item $model): QueryBuilder
+    public function query(Itempaket $model): QueryBuilder
     {
-        return $model->newQuery()->orderBy('id');
+        return $model->newQuery();
     }
 
     /**
@@ -49,11 +49,12 @@ class ItemDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('item-table')
+            ->setTableId('itempaket-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(1);
+            ->orderBy(1)
+            ->selectStyleSingle();
     }
 
     /**
@@ -64,15 +65,16 @@ class ItemDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-         
-            Column::make('id'),
-            Column::make('name_item'),
-            Column::make('hitungan'),
+
+            Column::make('id_item'),
+            Column::make('harga_reguler'),
+            Column::make('harga_oneday'),
+            Column::make('harga_express'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(100)
-                ->addClass("text-center")
+                ->width(120)
+                ->addClass('text-center'),
         ];
     }
 
@@ -83,6 +85,6 @@ class ItemDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Item_' . date('YmdHis');
+        return 'Itempaket_' . date('YmdHis');
     }
 }
