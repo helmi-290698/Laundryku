@@ -32,8 +32,9 @@ Route::get('/datalaundry', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/item_paket', [ItempaketController::class, 'index'])->middleware(['auth', 'verified'])->name('item_paket');
     Route::post('/item_paket', [ItempaketController::class, 'store'])->middleware(['auth', 'verified'])->name('create_item_paket');
+    Route::delete('/item_paket/delete/{id}', [ItempaketController::class, 'destroy'])->middleware(['auth', 'verified'])->name('delete_item_paket');
 });
-Route::get('/item_paket', [ItempaketController::class, 'index'])->middleware(['auth', 'verified'])->name('item_paket');
+
 Route::get('/item_laundry', [ItemController::class, 'index'])->middleware(['auth', 'verified'])->name('item_laundry');
 Route::get('/item_laundry/find', [ItemController::class, 'edit'])->middleware(['auth', 'verified'])->name('item_laundry_find');
 Route::get('/item_laundry/show', [ItemController::class, 'show'])->middleware(['auth', 'verified'])->name('item_laundry_show');

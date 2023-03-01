@@ -74,11 +74,45 @@ $("#form-tambah-item-paket").on("submit", function(e) {
                 $.each(data.error, function (prefix, val) {
                     $("input[name='"+prefix+"']").addClass("is-invalid");
                     $("span." + prefix + "_error").text(val[0]);
-                    console.log(val[0]);
+                    
                 });
             } else {
+                
+                alert(data.message);
                 window.location.href = url+"/item_paket";
             }
         },
     });
 });
+
+
+function deleteItempaket(data) {
+    let token = $("input[name='_token']").val();
+    // let id = $("input[name='id_item_paket']").val();
+    let method = $("input[name='_method']").val();
+    $.ajax({
+        url: url+"/item_paket/delete/"+data,
+        method: "delete",
+        data: {
+            '_token':token,
+        },
+        success: function (data) {
+           alert(data.message);
+            window.location.href = url+"/item_paket";
+           
+        }
+    });
+}
+ 
+function alert(data) {
+    Toastify({
+        text: data ,
+        className: "info",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+}
+   
+
+   

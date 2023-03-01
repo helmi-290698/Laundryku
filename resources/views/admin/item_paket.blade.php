@@ -6,6 +6,7 @@
         type="text/css">
     <link href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet"
         type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 @endsection
 @section('content')
     <div class="page-title-box">
@@ -47,7 +48,7 @@
                     <form action="{{ url('/item_paket') }}" method="post" id="form-tambah-item-paket">
                         @csrf
                         <label for="nama_paket" class="form-label">Nama Paket</label>
-                        <select name="id_item" id="item" class="form-select">
+                        <select name="item_id" id="item" class="form-select">
 
                         </select><br>
                         <span class="text-danger text-error id_item_error"></span>
@@ -65,15 +66,13 @@
             <div class="card">
 
                 <div class="card-body">
-                    <h4 class="card-title">Data Item Paket</h4>
+                    <div class="row ">
+                        <h4 class="card-title">Data Item Paket</h4>
 
-
-
-
-                    {!! $dataTable->table() !!}
-
-
-
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            {!! $dataTable->table() !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,15 +94,12 @@
     <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script>
         let url = `{{ url('/') }}`;
     </script>
     <script src="{{ asset('assets/js/item_paket.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable();
-        });
-    </script>
+
     {!! $dataTable->scripts() !!}
 @endsection

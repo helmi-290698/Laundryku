@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('itempakets', function (Blueprint $table) {
-            $table->id('id_itempaket');
-            $table->string('id_item');
-            $table->string('harga_reguler');
-            $table->string('harga_oneday');
-            $table->string('harga_express');
+            $table->id();
+            $table->foreignId('item_id');
+            $table->string('harga_reguler')->nullable();
+            $table->string('harga_oneday')->nullable();
+            $table->string('harga_express')->nullable();
             $table->timestamps();
         });
     }

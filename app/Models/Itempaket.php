@@ -9,5 +9,9 @@ class Itempaket extends Model
 {
     use HasFactory;
     protected $table = "itempakets";
-    protected $fillable = ["id_item", "harga_reguler", "harga_oneday", "harga_express"];
+    protected $fillable = ["item_id", "harga_reguler", "harga_oneday", "harga_express"];
+    public function item()
+    {
+        return $this->belongsTo(item::class);
+    }
 }

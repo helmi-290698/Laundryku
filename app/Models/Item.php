@@ -10,4 +10,8 @@ class Item extends Model
     use HasFactory;
     protected $table = "items";
     protected $fillable = ["name_item", "hitungan"];
+    public function itempaket()
+    {
+        return $this->hasOne(Itempaket::class);
+    }
 }

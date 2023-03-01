@@ -23,10 +23,13 @@ class ItempaketDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn('nama_item', function ($data) {
+
+                return $data->item->name_item;
+            })
             ->addColumn('action', function ($data) {
                 $csrf =  csrf_token();
-                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'> edit</button>&nbsp;<form method='POST' action='/item_laundry/delete/" . $data->id . "' class='d-inline'> <input type='hidden' name='_token' value='" . $csrf . "'/>
-            <input type='hidden' name='_method' value='DELETE'/><button type='submit' class='btn btn-danger btn-sm' onclick='return confirm(`are you sure?`)'>hapus</button></form>";
+                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'> edit</button>&nbsp; <button type='button' onclick='deleteItempaket(" . $data->id . ")' class='btn btn-danger btn-sm'>hapus</button>";
             });
     }
 
@@ -54,7 +57,9 @@ class ItempaketDataTable extends DataTable
             ->minifiedAjax()
             //->dom('Bfrtip')
             ->orderBy(1)
-            ->selectStyleSingle();
+            ->selectStyleSingle()
+            ->responsive(true)
+            ->autoWidth(false);
     }
 
     /**
@@ -65,8 +70,7 @@ class ItempaketDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
-            Column::make('id_item'),
+            Column::computed('nama_item'),
             Column::make('harga_reguler'),
             Column::make('harga_oneday'),
             Column::make('harga_express'),

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Itempaket;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use App\DataTables\ItempaketDataTable;
 use Illuminate\Support\Facades\Validator;
@@ -37,24 +38,42 @@ class ItempaketController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = Validator::make($request->all(), [
-            'id_item' => 'required',
-            'harga_reguler' => 'required',
-            'harga_oneday' => 'required',
-            'harga_express' => 'required'
-        ]);
+
+        $data = Item::find($request->item_id);
+
+        if ($data->hitungan == "peritem") {
+            $validatedData = Validator::make($request->all(), [
+                'item_id' => 'required',
+                'harga_reguler' => 'required',
+                'harga_oneday' => 'required',
+                'harga_express' => 'required'
+            ]);
+        } elseif ($data->hitungan == "perkilo") {
+            $validatedData = Validator::make($request->all(), [
+                'item_id' => 'required',
+                'harga_reguler' => 'required',
+                'harga_oneday' => 'required',
+                'harga_express' => 'required'
+            ]);
+        } elseif ($data->hitungan == "permeter") {
+            $validatedData = Validator::make($request->all(), [
+                'item_id' => 'required',
+                'harga_reguler' => 'required',
+            ]);
+        }
+
         if ($validatedData->fails()) {
             return response()->json(['status' => 0, 'error' => $validatedData->errors()]);
         }
         $itempaket = [
-            'id_item' => $request->id_item,
+            'item_id' => $request->item_id,
             'harga_reguler' => $request->harga_reguler,
             'harga_oneday' => $request->harga_oneday,
             'harga_express' => $request->harga_express
         ];
 
         Itempaket::create($itempaket);
-        return response()->json(['status' => 1]);
+        return response()->json(['status' => 1, 'message' => 'Data added Successfully!']);
     }
 
     /**
@@ -97,8 +116,9 @@ class ItempaketController extends Controller
      * @param  \App\Models\Itempaket  $itempaket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Itempaket $itempaket)
+    public function destroy($id)
     {
-        //
+        Itempaket::destroy($id);
+        return response()->json(['status' => true, 'message' => 'Delete data Successfully!']);
     }
 }
