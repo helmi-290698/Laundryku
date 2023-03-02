@@ -76,7 +76,103 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modal-update-itempaket" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ url('/item_paket/edit') }}" class="update-item-paket" id="form-ubah-item-paket"
+                        method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Edit Item Laundry
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            <input type="hidden" name="id" class="form-control" id="itempaket_id">
+                            <input type="hidden" name="id_item" class="form-control" id="id_item">
+                            <label for="hitungan">Hitungan</label>
 
+                            <select class="form-select" name="name_item" id="itempaket_select" disabled>
+                                <option>-- Pilih Lembaga --</option>
+                                @foreach ($item_paket as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name_item }}</option>
+                                @endforeach
+                            </select><br>
+                            <label for="harga_reguler">Harga Reguler</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" name="harga_reguler" class="form-control" id="harga_reguler">
+                            </div>
+                            <span class="text-danger text-error harga_reguler_error"></span>
+                            <br>
+                            <label for="harga_oneday">Harga One Day</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" name="harga_oneday" class="form-control" id="harga_oneday">
+                            </div>
+                            <span class="text-danger text-error harga_oneday_error"></span>
+                            <br>
+                            <label for="harga_express">Harga Express</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" name="harga_express" class="form-control" id="harga_express">
+                            </div>
+                            <span class="text-danger text-error harga_express_error"></span>
+                            <br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <div class="modal fade" id="modal-update-itempaket-permeter" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ url('/item_paket/edit') }}" class="update-item-paket" id="form-ubah-item-paket"
+                        method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Edit Item Laundry
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            <input type="hidden" name="id" class="form-control" id="itempaket_id_permeter">
+                            <input type="hidden" name="id_item" class="form-control" id="id_item_permeter">
+                            <label for="hitungan">Hitungan</label>
+                            <select class="form-select" name="name_item" id="itempaket_select" disabled>
+                                <option>-- Pilih Lembaga --</option>
+                                @foreach ($item_paket as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name_item }}</option>
+                                @endforeach
+                            </select><br>
+                            <label for="harga_reguler">Harga Reguler</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" name="harga_reguler" class="form-control"
+                                    id="harga_reguler_permeter">
+                            </div>
+                            <span class="text-danger text-error harga_reguler_error"></span>
+                            <br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
     </div> <!-- end col -->
     </div>
 @endsection
