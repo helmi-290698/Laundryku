@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="calendar.html" class=" waves-effect">
+                    <a href="{{ url('/laundry') }}" class=" waves-effect">
                         <i class="ti-receipt"></i>
                         <span>Input Data</span>
                     </a>

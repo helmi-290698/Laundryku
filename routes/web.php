@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItempaketController;
+use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Item;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/item_paket/edit', [ItempaketController::class, 'update'])->middleware(['auth', 'verified'])->name('update_item_paket');
     Route::get('/item_paket/find', [ItempaketController::class, 'edit'])->middleware(['auth', 'verified'])->name('edit_item_paket');
     Route::delete('/item_paket/delete/{id}', [ItempaketController::class, 'destroy'])->middleware(['auth', 'verified'])->name('delete_item_paket');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/laundry', [LaundryController::class, 'index'])->middleware(['auth', 'verified'])->name('laundry');
+    Route::get('/laundry/findharga', [LaundryController::class, 'getharga'])->middleware(['auth', 'verified'])->name('getharga_laundry');
 });
 
 Route::get('/item_laundry', [ItemController::class, 'index'])->middleware(['auth', 'verified'])->name('item_laundry');
