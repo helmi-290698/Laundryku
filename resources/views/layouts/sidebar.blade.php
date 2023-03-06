@@ -36,6 +36,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ url('/item_laundry') }}">Item Laundry</a></li>
                         <li><a href="{{ url('/item_paket') }}">Item Paket</a></li>
+                        <li><a href="{{ url('/tipelaundry') }}">Tipe Laundry</a></li>
                     </ul>
                 </li>
 

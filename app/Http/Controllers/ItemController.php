@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use App\DataTables\ItemDataTable;
+use Illuminate\Support\Facades\Validator;
 
 class ItemController extends Controller
 {
@@ -36,13 +37,21 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validatedData = validator::make($request->all(), [
             'name_item' => 'required|max:255',
-            'hitungan' => 'required'
+            'hitungan' => 'required',
+            'tipelaundry_id' => 'required'
         ]);
-
-        Item::create($validatedData);
-        return redirect('/item_laundry');
+        if ($validatedData->fails()) {
+            return response()->json(['status' => 0, 'error' => $validatedData->errors()]);
+        }
+        $data = [
+            'name_item' => $request->name_item,
+            'hitungan' => $request->hitungan,
+            'tipelaundry_id' => $request->tipelaundry_id
+        ];
+        Item::create($data);
+        return response()->json(['status' => 1, 'message' => 'Data Added successfully!']);
     }
 
     /**
@@ -55,6 +64,11 @@ class ItemController extends Controller
     {
         $data = Item::all();
 
+        return $data;
+    }
+    public function getItemByIdtipe(Request $request)
+    {
+        $data = item::with('itempaket')->where('tipelaundry_id', '=', $request->id)->get();
         return $data;
     }
 

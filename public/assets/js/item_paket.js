@@ -110,6 +110,7 @@ $("#form-tambah-item-paket").on("submit", function(e) {
 });
 
 
+
 function deleteItempaket(data) {
     let token = $("input[name='_token']").val();
     // let id = $("input[name='id_item_paket']").val();
@@ -120,6 +121,9 @@ function deleteItempaket(data) {
         data: {
             '_token':token,
         },
+        beforeSend:function(){
+            return confirm("Are you sure?");
+         },
         success: function (data) {
            alert(data.message);
             window.location.href = url+"/item_paket";

@@ -73,3 +73,86 @@
         let hasil = biaya_laundry - diskon + biaya_lainya;
         $('#total_biaya').val(hasil)
     });
+
+    $("#form_input_laundry").on("submit", function(e) {
+    
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr("action"),
+            method: $(this).attr("method"),
+            data: new FormData(this),
+            processData: false,
+            dataType: "json",
+            contentType: false,
+            beforeSend: function () {
+                $(document).find("span.text-error").text("");
+                $(".is-invalid").removeClass("is-invalid");
+            },
+            success: function (data) {
+            //    console.log(data);
+                if (data.status == 0) {
+                    $.each(data.error, function (prefix, val) {
+                        $("input[name='"+prefix+"']").addClass("is-invalid");
+                        $("span." + prefix + "_error").text(val[0]);
+                        $("select[name='"+prefix+"']").addClass("is-invalid");
+                        $("textarea[name='"+prefix+"']").addClass("is-invalid");
+                    });
+                } else {
+                    
+                    alert(data.message);
+                    window.location.href = url+"/datalaundry";
+                }
+            },
+        });
+    });
+
+showdatatipe()
+
+function showdatatipe() {
+    $.ajax({
+        url: url+"/tipelaundry/show",
+        method: "get",
+        processData: false,
+        dataType: "json",
+        contentType: false,
+        success: function (data) {
+          $.each(data,function (i,val) {
+            $('select[name="tipelaundry_id"]').append(`<option value='`+val.id+`'>`+val.name_tipe+`</option>`)
+          })
+           
+        }
+    });
+}
+
+$('select[name="tipelaundry_id"]').on('change',function () {
+    let val = $(this).val();
+    $.ajax({ 
+        type: 'GET', 
+        url:url+'/item_laundry/findbyidtipe', 
+        data: { 
+            id: val,
+        }, 
+        dataType: 'json',
+        beforeSend:function () {
+            $('select[name="item_id"]').html(' ')
+        },
+        success: function (data) {
+            $('select[name="item_id"]').html('<option value=" ">-- pilih --</option>')
+            $.each(data,function (i,val) {
+                $('select[name="item_id"]').append(`<option value='`+val.id+`'>`+val.name_item+`</option>`);
+            })
+            
+        }
+    });
+})
+    
+
+    function alert(data) {
+        Toastify({
+            text: data ,
+            className: "info",
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+          }).showToast();
+    }

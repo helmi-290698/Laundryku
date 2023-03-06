@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('tipelaundries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tipelaundry_id');
-            $table->string('name_item');
-            $table->enum('hitungan', ['permeter', 'perkilo', 'peritem']);
+            $table->string('name_tipe');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('tipelaundries');
     }
 };

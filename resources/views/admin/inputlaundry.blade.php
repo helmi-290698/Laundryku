@@ -38,56 +38,71 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="{{ url('/laundry/store') }}" method="post" id="form_input_laundry">
+                        @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="row mb-3">
                                     <label for="example-text-input" class="mb-2">Nama</label>
                                     <div class="col-sm-12">
-                                        <input class="form-control" type="text" placeholder="John doe"
+                                        <input class="form-control" type="text" name="name" placeholder="John doe"
                                             id="example-text-input">
+                                        <span class="text-danger text-error name_error"></span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="example-search-input" class="mb-2">No Telepon</label>
                                     <div class="col-sm-12">
-                                        <input class="form-control" type="search" placeholder="083829907008"
-                                            id="example-search-input">
+                                        <input class="form-control" type="text" name="phone_number"
+                                            placeholder="083829907008" id="example-search-input">
+                                        <span class="text-danger text-error phone_number_error"></span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="example-email-input" class="mb-2">Email (optional)</label>
                                     <div class="col-sm-12">
-                                        <input class="form-control" type="email" placeholder="bootstrap@example.com"
-                                            id="example-email-input">
+                                        <input class="form-control" type="email" name="email"
+                                            placeholder="bootstrap@example.com" id="example-email-input">
+                                        <span class="text-danger text-error email_error"></span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="example-email-input" class="mb-2">Alamat</label>
                                     <div class="col-sm-12">
-                                        <textarea name="" class="form-control" id="" cols="30" rows="9"></textarea>
+                                        <textarea name="address" class="form-control" id="" cols="30" rows="9"></textarea>
+                                        <span class="text-danger text-error address_error"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row mb-3">
+                                    <label for="example-text-input" class="mb-2">Tipe laundry</label>
+                                    <div class="col-sm-12">
+                                        <select name="tipelaundry_id" class="form-select" id="tipelaundry_id">
+                                            <option value=" ">-- pilih --</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
                                     <label for="example-text-input" class="mb-2">Jenis Item</label>
                                     <div class="col-sm-12">
-                                        <select name="" class="form-select" id="jenis_item">
+                                        <select name="item_id" class="form-select" id="jenis_item">
                                             <option value=" ">-- pilih --</option>
-                                            @foreach ($items as $item)
-                                                <option value="{{ $item->item->id }}">{{ $item->item->name_item }}</option>
-                                            @endforeach
+
                                         </select>
+                                        <span class="text-danger text-error item_id_error"></span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="example-text-input" class="mb-2">Jenis Cucian</label>
                                     <div class="col-sm-12">
-                                        <select name="" class="form-select" id="jenis_cucian">
+                                        <select name="jenis_cucian" class="form-select" id="jenis_cucian">
                                             <option value=" ">-- pilih --</option>
 
                                         </select>
+                                        <span class="text-danger text-error jenis_cucian_error"></span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -97,10 +112,12 @@
                                             <span class="input-group-text">Rp</span>
                                             <input type="number" class="form-control" id='harga' readonly>
                                             <span class="input-group-text">X</span>
-                                            <input type="number" class="form-control" min='0'
+                                            <input type="text" class="form-control" name="jumlah" min='0'
                                                 id="jumlah_laundry">
                                             <span class="input-group-text">Kg-M-Item</span>
+
                                         </div>
+                                        <span class="text-danger text-error jumlah_error"></span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -141,7 +158,8 @@
                                     <div class="col-sm-12" id="hitungan">
                                         <div class="input-group">
                                             <span class="input-group-text">Rp</span>
-                                            <input type="number" class="form-control" id='total_biaya' readonly>
+                                            <input type="number" class="form-control" name="total_biaya"
+                                                id='total_biaya' readonly>
                                         </div>
                                     </div>
                                 </div>

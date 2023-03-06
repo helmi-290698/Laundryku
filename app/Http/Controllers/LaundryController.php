@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Itempaket;
+use App\Models\Consument;
+use App\Models\Laundry;
+use App\DataTables\LaundryDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Contracts\DataTable;
 
 class LaundryController extends Controller
 {
@@ -31,6 +36,11 @@ class LaundryController extends Controller
         }
         return $data;
     }
+
+    public function datatablelaundry(LaundryDataTable $datatable)
+    {
+        return $datatable->render('admin.datalaundry');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -49,7 +59,46 @@ class LaundryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $code = random_int(1000000, 9999999);
+        $validatedData = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'phone_number' => 'required|min:12|max:13',
+            'address' => 'required|max:255',
+            'item_id' => 'required',
+            'jenis_cucian' => 'required',
+            'jumlah' => 'required|numeric',
+            'total_biaya' => 'required|numeric'
+        ]);
+
+        if ($validatedData->fails()) {
+            return response()->json(['status' => 0, 'error' => $validatedData->errors()]);
+        }
+
+        $customer = [
+            'name' => $request->name,
+            'phone_number' => $request->phone_number,
+            'address' => $request->address,
+            'email' => $request->email,
+            'code' => $code
+        ];
+
+
+
+        Consument::create($customer);
+
+        $data = Consument::where('code', $code)->first();
+
+        $laundry = [
+            'item_id' => $request->item_id,
+            'consument_id' => $data->id,
+            'jenis_cucian' => $request->jenis_cucian,
+            'jumlah' => $request->jumlah,
+            'total_biaya' => $request->total_biaya
+
+        ];
+
+        Laundry::create($laundry);
+        return response()->json(['status' => 1, 'message' => 'Data added Successfully!']);
     }
 
     /**

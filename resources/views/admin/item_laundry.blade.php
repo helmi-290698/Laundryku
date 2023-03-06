@@ -6,6 +6,7 @@
         type="text/css">
     <link href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet"
         type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 @endsection
 @section('content')
     <div class="page-title-box">
@@ -43,31 +44,27 @@
         <div class="col-sm-12 col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ url('/item_laundry/store') }}" method="post">
+                    <form action="{{ url('/item_laundry/store') }}" method="post" id="form-tambah-item-laundry">
                         @csrf
                         <label for="name_item" class="form-label">Nama Item Laundry</label>
-                        <input type="text"
-                            class="form-control @error('name_item')
-                            is-invalid
-                        @enderror"
-                            name="name_item" id="name_item" placeholder="Nama Item Laundry">
-                        @error('name_item')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <input type="text" class="form-control" name="name_item" id="name_item"
+                            placeholder="Nama Item Laundry">
+                        <span class="text-danger text-error name_item_error"></span>
+                        <br>
+                        <label for="hitungan" class="form-label">Tipe Laundry</label>
+                        <select name="tipelaundry_id" id="tipe_laundry" class="form-select">
+                            <option value=" ">--pilih--</option>
+                        </select>
+                        <span class="text-danger text-error tipelaundry_id_error"></span>
                         <br>
                         <label for="hitungan" class="form-label">Hitungan</label>
-                        <select name="hitungan" id="hitungan"
-                            class="form-select @error('hitungan')
-                            is-invalid
-                        @enderror">
+                        <select name="hitungan" id="hitungan" class="form-select">
                             <option value=" ">--pilih--</option>
                             <option value="peritem">Per Item</option>
                             <option value="permeter">Per Meter</option>
                             <option value="perkilo">Per Kilo</option>
                         </select>
-                        @error('hitungan')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <span class="text-danger text-error hitungan_error"></span>
                         <br>
                         <button type="submit" class="btn btn-primary btn-sm"> Simpan </button>
 
@@ -143,6 +140,7 @@
     <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         let url = `{{ url('/') }}`;
     </script>

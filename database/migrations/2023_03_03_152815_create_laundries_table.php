@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('laundries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tipelaundry_id');
-            $table->string('name_item');
-            $table->enum('hitungan', ['permeter', 'perkilo', 'peritem']);
+            $table->foreignId('item_id');
+            $table->foreignId('consument_id');
+            $table->string('jenis_cucian');
+            $table->double('jumlah');
+            $table->double('total_biaya');
+            $table->enum('status', ['antrian', 'cuci', 'setrika', 'packing', 'selesai'])->default('antrian');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('laundries');
     }
 };
