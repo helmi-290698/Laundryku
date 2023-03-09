@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ConsumentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItempaketController;
 use App\Http\Controllers\LaundryController;
@@ -25,9 +27,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/item_paket', [ItempaketController::class, 'index'])->middleware(['auth', 'verified'])->name('item_paket');
@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/datalaundry', [LaundryController::class, 'datatablelaundry'])->name('data_laundry');
     Route::get('/laundry/findharga', [LaundryController::class, 'getharga'])->name('getharga_laundry');
     Route::post('/laundry/store', [LaundryController::class, 'store'])->name('store_laundry');
+    Route::post('/laundry/edit', [LaundryController::class, 'edit'])->name('edit_laundry');
+    Route::delete('/laundry/delete/{id}', [LaundryController::class, 'destroy'])->name('delete_laundry');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/tipelaundry', [TipelaundryController::class, 'index'])->name('tipelaundry');
@@ -59,6 +61,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/item_laundry/store', [ItemController::class, 'store'])->name('item_laundry_store');
     Route::post('/item_laundry/edit', [ItemController::class, 'update'])->name('item_laundry_edit');
     Route::delete('/item_laundry/delete/{id}', [ItemController::class, 'destroy'])->name('item_laundry_delete');
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/consument/find/{id}', [ConsumentController::class, 'show'])->name('consument_find');
 });
 
 Route::middleware('auth')->group(function () {

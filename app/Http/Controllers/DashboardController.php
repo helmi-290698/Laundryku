@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\consument;
+use App\Models\Laundry;
 use Illuminate\Http\Request;
 
-class ConsumentController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,14 @@ class ConsumentController extends Controller
      */
     public function index()
     {
-        //
+        $omset = Laundry::where('status', '=', 'selesai')->sum('total_biaya');
+        $laundry = Laundry::all();
+        $statusdone = Laundry::where('status', '=', 'selesai')->get();
+        $statusprocess = Laundry::where('status', '!=', 'selesai')->get();
+        $done = count($statusdone);
+        $process = count($statusprocess);
+        $orders = count($laundry);
+        return view('admin.dashboard', ['omset' => $omset, 'order' => $orders, 'done' => $done, 'process' => $process]);
     }
 
     /**
@@ -41,22 +48,21 @@ class ConsumentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\consument  $consument
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $data = Consument::find($id);
-        return $data;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\consument  $consument
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(consument $consument)
+    public function edit($id)
     {
         //
     }
@@ -65,10 +71,10 @@ class ConsumentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\consument  $consument
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, consument $consument)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +82,10 @@ class ConsumentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\consument  $consument
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(consument $consument)
+    public function destroy($id)
     {
         //
     }

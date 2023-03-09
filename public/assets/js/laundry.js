@@ -145,7 +145,82 @@ $('select[name="tipelaundry_id"]').on('change',function () {
         }
     });
 })
+    $(document).on('click','.open_modal_status',function () {
+        let id_laundry= $(this).val();
+        $('#id_item').val(id_laundry);
+        $('#modal_status').modal('show');
+    })
+    $(document).on('click','.open-modal-konsumen',function () {
+        let consumen_id= $(this).data('id');
+           $.ajax({
+            url: url+"/consument/find/"+consumen_id,
+            method: "get",
+            processData: false,
+            dataType: "json",
+            contentType: false,
+            success: function (data) {
+                console.log(data);
+             $('#code').val(data.code);
+             $('#nama').val(data.name);
+             $('#phone_number').val(data.phone_number);
+             $('#email').val(data.email);
+             $('#alamat').text(data.address)
+          
+               
+            }
+        });
+        $('#modal_konsumen').modal('show');
+    })
+
+    $('#update-status-laundry').on("submit", function(e) {
     
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr("action"),
+            method: $(this).attr("method"),
+            data: new FormData(this),
+            processData: false,
+            dataType: "json",
+            contentType: false,
+            beforeSend: function () {
+                $(document).find("span.text-error").text("");
+                $(".is-invalid").removeClass("is-invalid");
+            },
+            success: function (data) {
+               
+                if (data.status == 0) {
+                    $.each(data.error, function (prefix, val) {
+                        $("input[name='"+prefix+"']").addClass("is-invalid");
+                        $("span." + prefix + "_error").text(val[0]);
+                        $("select[name='"+prefix+"']").addClass("is-invalid");
+                    });
+                } else {
+                    
+                    alert(data.message);
+                    window.location.href = url+"/datalaundry";
+                }
+            },
+        });
+    });
+
+    function deleteLaundry(data) {
+    let token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: url+"/laundry/delete/"+data,
+            method: "delete",
+            data:{
+                '_token': token
+            },
+            beforeSend:function(){
+                return confirm("Are you sure?");
+             },
+            success: function (data) {
+               alert(data.message);
+                window.location.href = url+"/datalaundry";
+               
+            }
+        });
+    }
 
     function alert(data) {
         Toastify({

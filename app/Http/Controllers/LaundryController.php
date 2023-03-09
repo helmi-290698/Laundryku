@@ -118,9 +118,23 @@ class LaundryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'id_item' => 'required',
+            'status' => 'required',
+
+        ]);
+
+        if ($validatedData->fails()) {
+            return response()->json(['status' => 0, 'error' => $validatedData->errors()]);
+        }
+
+        $laundry = [
+            'status' => $request->status,
+        ];
+        Laundry::where("id", $request->id_item)->update($laundry);
+        return response()->json(['status' => 1, 'message' => 'Update Data sucessfully']);
     }
 
     /**
@@ -143,6 +157,7 @@ class LaundryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Laundry::destroy($id);
+        return response()->json(['status' => true, 'message' => 'Delete data Successfully!']);
     }
 }

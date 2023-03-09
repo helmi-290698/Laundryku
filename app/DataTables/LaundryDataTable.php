@@ -23,9 +23,14 @@ class LaundryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+
             ->addColumn('nama_item', function ($data) {
 
                 return $data->item->name_item;
+            })
+            ->addColumn('total_biaya', function ($data) {
+
+                return 'Rp ' . number_format($data->total_biaya);
             })
             ->addColumn('tipe', function ($data) {
 
@@ -47,26 +52,26 @@ class LaundryDataTable extends DataTable
             })
             ->addColumn('nama_konsumen', function ($data) {
 
-                return $data->consument->name;
+                return "<a href='javascript: void(0);' class='text-muted open-modal-konsumen' data-id='" . $data->consument_id . "' ><i class='fa fa-user'></i> " . $data->consument->name . "</a>";
             })
             ->addColumn('status', function ($data) {
 
                 if ($data->status == 'antrian') {
-                    $raw = "<button class='btn btn-primary btn-sm'>" . $data->status . "</button>";
+                    $raw = "<button class='btn btn-primary btn-sm open_modal_status' value='" . $data->id . "'><i class='fas fa-ticket-alt'></i> " . $data->status . "</button>";
                 } else if ($data->status == 'cuci') {
-                    $raw = "<button class='btn btn-warning btn-sm'>" . $data->status . "</button>";
+                    $raw = "<button class='btn btn-warning btn-sm open_modal_status' value='" . $data->id . "'><i class='fa fa-soap'></i> " . $data->status . "</button>";
                 } else if ($data->status == 'setrika') {
-                    $raw = "<button class='btn btn-warning btn-sm'>" . $data->status . "</button>";
+                    $raw = "<button class='btn btn-warning btn-sm open_modal_status' value='" . $data->id . "'><i class='fas fa-tshirt'></i> " . $data->status . "</button>";
                 } else if ($data->status == 'packing') {
-                    $raw = "<button class='btn btn-danger btn-sm'>" . $data->status . "</button>";
-                } else if ($data->status == 'selsai') {
-                    $raw = "<button class='btn btn-success btn-sm'>" . $data->status . "</button>";
+                    $raw = "<button class='btn btn-danger btn-sm open_modal_status' value='" . $data->id . "'><i class='fas fa-box'></i> " . $data->status . "</button>";
+                } else if ($data->status == 'selesai') {
+                    $raw = "<button class='btn btn-success btn-sm open_modal_status' value='" . $data->id . "'><i class='fas fa-check-square'></i> " . $data->status . "</button>";
                 }
                 return $raw;
             })
             ->addColumn('action', function ($data) {
-
-                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'> edit</button>&nbsp; <button type='button' onclick='deleteItempaket(" . $data->id . ")' class='btn btn-danger btn-sm'>hapus</button>";
+                $csrf = csrf_token();
+                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'><i class='fas fa-edit' aria-hidden='true'></i></button>&nbsp; <button type='button' onclick='deleteLaundry(" . $data->id . ")' value='" . $csrf . "' class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button></button>";
             })->rawColumns(['status', 'nama_konsumen', 'tipe', 'jumlah', 'nama_item', 'action']);
     }
 
@@ -113,7 +118,7 @@ class LaundryDataTable extends DataTable
             Column::computed('tipe'),
             Column::make('jenis_cucian'),
             Column::computed('jumlah'),
-            Column::make('total_biaya'),
+            Column::computed('total_biaya'),
             Column::computed('status')
                 ->exportable(false)
                 ->printable(false)

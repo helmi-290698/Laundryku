@@ -12,23 +12,7 @@
                     <li class="breadcrumb-item active">Welcome to Veltrix Dashboard</li>
                 </ol>
             </div>
-            <div class="col-md-4">
-                <div class="float-end d-none d-md-block">
-                    <div class="dropdown">
-                        <button class="btn btn-primary  dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-cog me-2"></i> Settings
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
     <!-- end page title -->
@@ -41,8 +25,8 @@
                         <div class="float-start mini-stat-img me-4">
                             <img src="assets/images/services-icon/01.png" alt="">
                         </div>
-                        <h5 class="font-size-16 text-uppercase text-white-50">Orders</h5>
-                        <h4 class="fw-medium font-size-24">1,685 <i class="mdi mdi-arrow-up text-success ms-2"></i>
+                        <h5 class="font-size-16 text-uppercase text-white-50">Omset</h5>
+                        <h4 class="fw-medium font-size-24">Rp. {{ number_format($omset) }}
                         </h4>
                         <div class="mini-stat-label bg-success">
                             <p class="mb-0">+ 12%</p>
@@ -65,8 +49,8 @@
                         <div class="float-start mini-stat-img me-4">
                             <img src="assets/images/services-icon/02.png" alt="">
                         </div>
-                        <h5 class="font-size-16 text-uppercase text-white-50">Revenue</h5>
-                        <h4 class="fw-medium font-size-24">52,368 <i class="mdi mdi-arrow-down text-danger ms-2"></i></h4>
+                        <h5 class="font-size-16 text-uppercase text-white-50">Orders</h5>
+                        <h4 class="fw-medium font-size-24">{{ $order }} </h4>
                         <div class="mini-stat-label bg-danger">
                             <p class="mb-0">- 28%</p>
                         </div>
@@ -88,8 +72,8 @@
                         <div class="float-start mini-stat-img me-4">
                             <img src="assets/images/services-icon/03.png" alt="">
                         </div>
-                        <h5 class="font-size-16 text-uppercase text-white-50">Average Price</h5>
-                        <h4 class="fw-medium font-size-24">15.8 <i class="mdi mdi-arrow-up text-success ms-2"></i>
+                        <h5 class="font-size-16 text-uppercase text-white-50">Done</h5>
+                        <h4 class="fw-medium font-size-24">{{ $done }}
                         </h4>
                         <div class="mini-stat-label bg-info">
                             <p class="mb-0"> 00%</p>
@@ -112,8 +96,8 @@
                         <div class="float-start mini-stat-img me-4">
                             <img src="assets/images/services-icon/04.png" alt="">
                         </div>
-                        <h5 class="font-size-16 text-uppercase text-white-50">Product Sold</h5>
-                        <h4 class="fw-medium font-size-24">2436 <i class="mdi mdi-arrow-up text-success ms-2"></i>
+                        <h5 class="font-size-16 text-uppercase text-white-50">Process</h5>
+                        <h4 class="fw-medium font-size-24">{{ $process }}
                         </h4>
                         <div class="mini-stat-label bg-warning">
                             <p class="mb-0">+ 84%</p>
