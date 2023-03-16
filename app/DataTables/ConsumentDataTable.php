@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Item;
+use App\Models\Consument;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ItemDataTable extends DataTable
+class ConsumentDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -24,21 +24,21 @@ class ItemDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($data) {
-                $csrf =  csrf_token();
-                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'> edit</button>&nbsp;<form method='POST' action='/item_laundry/delete/" . $data->id . "' class='d-inline'> <input type='hidden' name='_token' value='" . $csrf . "'/>
-                <input type='hidden' name='_method' value='DELETE'/><button type='submit' class='btn btn-danger btn-sm' onclick='return confirm(`are you sure?`)'>hapus</button></form>";
-            });
+                $csrf = csrf_token();
+                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'><i class='fas fa-edit' aria-hidden='true'></i></button>";
+            })->rawColumns(['status', 'nama_konsumen', 'tipe', 'jumlah', 'nama_item', 'action'])
+            ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Item $model
+     * @param \App\Models\Consument $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Item $model): QueryBuilder
+    public function query(Consument $model): QueryBuilder
     {
-        return $model->newQuery()->orderBy('id');
+        return $model->newQuery();
     }
 
     /**
@@ -49,7 +49,7 @@ class ItemDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('item-table')
+            ->setTableId('consument-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -69,13 +69,17 @@ class ItemDataTable extends DataTable
         return [
 
             Column::make('id'),
-            Column::make('name_item'),
-            Column::make('hitungan'),
+            Column::make('code'),
+            Column::make('name'),
+            Column::make('address'),
+            Column::make('phone_number'),
+            Column::make('email'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(100)
-                ->addClass("text-center")
+                ->width(50)
+                ->searchable()
+                ->addClass('text-center'),
         ];
     }
 
@@ -86,6 +90,6 @@ class ItemDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Item_' . date('YmdHis');
+        return 'Consument_' . date('YmdHis');
     }
 }

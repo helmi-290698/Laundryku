@@ -63,7 +63,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/item_laundry/delete/{id}', [ItemController::class, 'destroy'])->name('item_laundry_delete');
 });
 Route::middleware('auth')->group(function () {
+    Route::get('/consument', [ConsumentController::class, 'index'])->name('consument');
     Route::get('/consument/find/{id}', [ConsumentController::class, 'show'])->name('consument_find');
+    Route::get('/consument/show', [ConsumentController::class, 'showall'])->name('consument_show');
 });
 
 Route::middleware('auth')->group(function () {

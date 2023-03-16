@@ -39,7 +39,8 @@ class LaundryController extends Controller
 
     public function datatablelaundry(LaundryDataTable $datatable)
     {
-        return $datatable->render('admin.datalaundry');
+        $title = "Data Laundry";
+        return $datatable->render('admin.datalaundry', ['title' => $title]);
     }
     /**
      * Show the form for creating a new resource.

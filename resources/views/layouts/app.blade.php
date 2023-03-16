@@ -5,7 +5,7 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Form Advanced | Veltrix - Admin & Dashboard Template</title>
+    <title>{{ config('app.name') }} | {{ $title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
@@ -24,7 +24,7 @@
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
     <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css">
-    @yield('plugin-css')
+    @stack('plugin-css')
 
 </head>
 
@@ -134,7 +134,7 @@
     <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    @yield('plugin-js')
+    @stack('plugin-js')
 
 </body>
 

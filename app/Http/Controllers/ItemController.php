@@ -16,7 +16,8 @@ class ItemController extends Controller
      */
     public function index(ItemDataTable $datatable)
     {
-        return $datatable->render('admin.item_laundry');
+        $title = "Data Item Laundry";
+        return $datatable->render('admin.item_laundry', ['title' => $title]);
     }
 
     /**

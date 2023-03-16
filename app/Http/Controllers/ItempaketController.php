@@ -17,10 +17,10 @@ class ItempaketController extends Controller
      */
     public function index(ItempaketDataTable $datatable)
     {
-
+        $title = "Data item Paket";
         $data = Item::all();
 
-        return $datatable->render('admin.item_paket', ['item_paket' => $data]);
+        return $datatable->render('admin.item_paket', ['item_paket' => $data, 'title' => $title]);
     }
 
     /**
@@ -112,7 +112,7 @@ class ItempaketController extends Controller
     public function update(Request $request)
     {
         $data = Item::find($request->id_item);
-        
+
         if ($data->hitungan == 'permeter') {
             $validatedData = Validator::make($request->all(), [
                 'id' => 'required',

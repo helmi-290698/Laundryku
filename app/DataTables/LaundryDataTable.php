@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Consument;
 use App\Models\Laundry;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -36,6 +37,7 @@ class LaundryDataTable extends DataTable
 
                 return $data->item->tipelaundry->name_tipe;
             })
+
             ->addColumn('jumlah', function ($data) {
 
                 $cucian = $data->item->hitungan;
@@ -50,9 +52,16 @@ class LaundryDataTable extends DataTable
 
                 return $data->jumlah . " " . $atribut;
             })
+            ->filterColumn('jumlah', function ($query, $keyword) {
+                $sql = "CONCAT(laundries.jumlah) like ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
+            })
             ->addColumn('nama_konsumen', function ($data) {
 
-                return "<a href='javascript: void(0);' class='text-muted open-modal-konsumen' data-id='" . $data->consument_id . "' ><i class='fa fa-user'></i> " . $data->consument->name . "</a>";
+                return "<a href='javascript: void(0);' class='text-muted open-modal-konsumen' data-id='" . $data->consument->id . "' ><i class='fa fa-user'></i> " . $data->consument->name . "</a>";
+            })->filterColumn('jumlah', function ($query, $keyword) {
+                $sql = "CONCAT(laundries.consument_id) like ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
             })
             ->addColumn('status', function ($data) {
 
@@ -83,7 +92,9 @@ class LaundryDataTable extends DataTable
      */
     public function query(Laundry $model): QueryBuilder
     {
-        return $model->newQuery();
+        $laundry = laundry::with('consument');
+
+        return $laundry->newQuery();
     }
 
     /**
@@ -113,11 +124,11 @@ class LaundryDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::computed('nama_konsumen'),
-            Column::computed('nama_item'),
-            Column::computed('tipe'),
+            Column::make('nama_konsumen'),
+            Column::make('nama_item'),
+            Column::make('tipe'),
             Column::make('jenis_cucian'),
-            Column::computed('jumlah'),
+            Column::make('jumlah'),
             Column::computed('total_biaya'),
             Column::computed('status')
                 ->exportable(false)

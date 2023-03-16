@@ -14,6 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $title = "Dashboard";
         $omset = Laundry::where('status', '=', 'selesai')->sum('total_biaya');
         $laundry = Laundry::all();
         $statusdone = Laundry::where('status', '=', 'selesai')->get();
@@ -21,7 +22,7 @@ class DashboardController extends Controller
         $done = count($statusdone);
         $process = count($statusprocess);
         $orders = count($laundry);
-        return view('admin.dashboard', ['omset' => $omset, 'order' => $orders, 'done' => $done, 'process' => $process]);
+        return view('admin.dashboard', ['omset' => $omset, 'order' => $orders, 'done' => $done, 'process' => $process, 'title' => $title]);
     }
 
     /**

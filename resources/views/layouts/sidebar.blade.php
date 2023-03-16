@@ -14,7 +14,12 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-
+                <li>
+                    <a href="{{ url('/laundry') }}" class=" waves-effect">
+                        <i class="ti-receipt"></i>
+                        <span>Input Data</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ url('/datalaundry') }}" class=" waves-effect">
                         <i class="ti-view-grid"></i>
@@ -22,12 +27,11 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/laundry') }}" class=" waves-effect">
-                        <i class="ti-receipt"></i>
-                        <span>Input Data</span>
+                    <a href="{{ url('/consument') }}" class=" waves-effect">
+                        <i class="ti-user"></i>
+                        <span>Data Konsumen</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ti-settings"></i>

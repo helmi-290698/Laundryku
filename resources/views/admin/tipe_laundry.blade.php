@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('plugin-css')
+@push('plugin-css')
     <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
         type="text/css">
     <link href="{{ asset('assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet"
@@ -7,16 +7,15 @@
     <link href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet"
         type="text/css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-@endsection
+@endpush
 @section('content')
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-md-8">
                 <h6 class="page-title">{{ $title }}</h6>
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="#">Veltrix</a></li>
-                    <li class="breadcrumb-item"><a href="#">Tables</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ $title_page }}</li>
+                    <li class="breadcrumb-item"><a href="#">{{ config('app.name') }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
                 </ol>
             </div>
         </div>
@@ -94,7 +93,7 @@
     </div> <!-- end col -->
     </div>
 @endsection
-@section('plugin-js')
+@push('plugin-js')
     <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
@@ -116,4 +115,4 @@
     <script src="{{ asset('assets/js/tipe_laundry.js') }}"></script>
 
     {!! $dataTable->scripts() !!}
-@endsection
+@endpush

@@ -1,15 +1,15 @@
 @extends('layouts.app')
-@section('plugin-css')
+@push('plugin-css')
     <link href="{{ asset('assets/libs/chartist/chartist.min.css') }}" rel="stylesheet">
-@endsection
+@endpush
 @section('content')
     <!-- start page title -->
     <div class="page-title-box">
         <div class="row align-items-center">
             <div class="col-md-8">
-                <h6 class="page-title">Dashboard</h6>
+                <h6 class="page-title">{{ $title }}</h6>
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item active">Welcome to Veltrix Dashboard</li>
+                    <li class="breadcrumb-item active">Welcome to {{ config('app.name') }} Dashboard</li>
                 </ol>
             </div>
 
@@ -597,7 +597,7 @@
     </div>
     <!-- end row -->
 @endsection
-@section('plugin-js')
+@push('plugin-js')
     <!-- Peity chart-->
     <script src="{{ asset('assets/libs/peity/jquery.peity.min.js') }}"></script>
 
@@ -605,4 +605,4 @@
     <script src="{{ asset('assets/libs/chartist/chartist.min.js') }}"></script>
     <script src="{{ asset('assets/libs/chartist-plugin-tooltips/chartist-plugin-tooltip.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
-@endsection
+@endpush

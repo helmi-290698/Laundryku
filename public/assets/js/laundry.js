@@ -1,5 +1,94 @@
 
-    $('#jenis_item').on('change',function () {
+$('.tambah-laundry').on('click',function(){
+    tambahLaundry();
+
+});
+
+function tambahLaundry(){
+
+    $i = 1;
+    
+    var data=`<div class="control-group">
+     <div class="row">
+    <div class="col-6  col-md-4">
+        <div class="row mb-3">
+            <label for="example-text-input" class="mb-2">Tipe laundry</label>
+            <div class="col-sm-12">
+                <select name="tipelaundry_id[]" class="form-select" id="tipelaundry_id">
+                    <option value=" ">-- pilih --</option>
+
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="row mb-3">
+            <label for="example-text-input" class="mb-2">Jenis Item</label>
+            <div class="col-sm-12">
+                <select name="item_id[]" class="form-select" id="jenis_item">
+                    <option value=" ">-- pilih --</option>
+
+                </select>
+                <span class="text-danger text-error item_id_error"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="row mb-3">
+            <label for="example-text-input" class="mb-2">Jenis Cucian</label>
+            <div class="col-sm-12">
+                <select name="jenis_cucian[]" class="form-select" id="jenis_cucian">
+                    <option value=" ">-- pilih --</option>
+
+                </select>
+                <span class="text-danger text-error jenis_cucian_error"></span>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-md-6">
+            <div class="row mb-3">
+                <label for="example-text-input" class="mb-2">Jumlah Laundry</label>
+                <div class="col-sm-12" id="hitungan">
+                    <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+                        <input type="number" class="form-control" id='harga' readonly>
+                        <span class="input-group-text">X</span>
+                        <input type="text" class="form-control" name="jumlah" min='0'
+                            id="jumlah_laundry">
+                        <span class="input-group-text">Kg-M-Item</span>
+
+                    </div>
+                    <span class="text-danger text-error jumlah_error"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row mb-3">
+                <label for="example-text-input" class="mb-2">Biaya Laundry</label>
+                <div class="col-sm-12" id="hitungan">
+                    <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+                        <input type="number" class="form-control" id='biaya_laundry' disabled>
+                    </div> 
+                </div>
+            </div>
+        </div>
+            <div class="col-12 col-md-12">
+            <button type="button" class="btn btn-danger remove float-end"><i class="fa fa-trash"></i>&nbsp;Cucian</button>
+            </div>
+        </div>
+        <hr>
+        </div>`;
+    $('.tambah').append(data);
+};
+
+$("body").on("click",".remove",function(){ 
+    $(this).parents(".control-group").remove();
+});
+ 
+   
+   $('#jenis_item').on('change',function () {
         let itempaket_id = $(this).val();
      
       
@@ -96,6 +185,7 @@
                         $("span." + prefix + "_error").text(val[0]);
                         $("select[name='"+prefix+"']").addClass("is-invalid");
                         $("textarea[name='"+prefix+"']").addClass("is-invalid");
+                        console.log(prefix);
                     });
                 } else {
                     
@@ -117,14 +207,53 @@ function showdatatipe() {
         contentType: false,
         success: function (data) {
           $.each(data,function (i,val) {
-            $('select[name="tipelaundry_id"]').append(`<option value='`+val.id+`'>`+val.name_tipe+`</option>`)
+            $('select[name="tipelaundry_id[]"]').append(`<option value='`+val.id+`'>`+val.name_tipe+`</option>`)
           })
            
         }
     });
 }
 
-$('select[name="tipelaundry_id"]').on('change',function () {
+showdatakonsumen()
+function showdatakonsumen() {
+    $.ajax({
+        url: url+"/consument/show",
+        method: "get",
+        processData: false,
+        dataType: "json",
+        contentType: false,
+        success: function (data) {
+            console.log(data);
+          $.each(data,function (i,val) {
+            $('select[name="konsumen"]').append(`<option value='`+val.id+`'>`+val.code+` - `+val.name+`</option>`)
+          })
+           
+        }
+    });
+}
+
+$('select[name="konsumen"]').on('change',function () {
+    let consumen_id= $(this).val();
+           $.ajax({
+            url: url+"/consument/find/"+consumen_id,
+            method: "get",
+            processData: false,
+            dataType: "json",
+            contentType: false,
+            success: function (data) {
+              console.log(data);
+             $('input[name="name"]').val(data.name);
+             $('input[name="phone_number"]').val(data.phone_number);
+             $('input[name="email"]').val(data.email);
+             $('textarea[name="address"]').text(data.address);
+          
+               
+            }
+        });
+})
+
+
+$('select[name="tipelaundry_id[]"]').on('change',function () {
     let val = $(this).val();
     $.ajax({ 
         type: 'GET', 
@@ -134,12 +263,12 @@ $('select[name="tipelaundry_id"]').on('change',function () {
         }, 
         dataType: 'json',
         beforeSend:function () {
-            $('select[name="item_id"]').html(' ')
+            $('select[name="item_id[]"]').html(' ')
         },
         success: function (data) {
-            $('select[name="item_id"]').html('<option value=" ">-- pilih --</option>')
+            $('select[name="item_id[]"]').html('<option value=" ">-- pilih --</option>')
             $.each(data,function (i,val) {
-                $('select[name="item_id"]').append(`<option value='`+val.id+`'>`+val.name_item+`</option>`);
+                $('select[name="item_id[]"]').append(`<option value='`+val.id+`'>`+val.name_item+`</option>`);
             })
             
         }

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ConsumentDataTable;
 use App\Models\consument;
 use Illuminate\Http\Request;
+use App\DataTables\LaundryDataTable;
+use Yajra\DataTables\Contracts\DataTable;
 
 class ConsumentController extends Controller
 {
@@ -12,9 +15,11 @@ class ConsumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ConsumentDataTable $datatable)
     {
-        //
+
+        $title = "Data Consument";
+        return $datatable->render('admin.datakonsumen', ['title' => $title]);
     }
 
     /**
@@ -47,6 +52,11 @@ class ConsumentController extends Controller
     public function show($id)
     {
         $data = Consument::find($id);
+        return $data;
+    }
+    public function showall()
+    {
+        $data = Consument::all();
         return $data;
     }
 
