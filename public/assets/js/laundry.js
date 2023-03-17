@@ -1,20 +1,18 @@
+let loop = 0;
 
 $('.tambah-laundry').on('click',function(){
     tambahLaundry();
 
 });
-
 function tambahLaundry(){
-
-    $i = 1;
-    
+  loop++;
     var data=`<div class="control-group">
      <div class="row">
     <div class="col-6  col-md-4">
         <div class="row mb-3">
             <label for="example-text-input" class="mb-2">Tipe laundry</label>
             <div class="col-sm-12">
-                <select name="tipelaundry_id[]" class="form-select" id="tipelaundry_id">
+                <select name="tipelaundry_id[]" class="form-select" id="tipelaundry_id`+loop+`">
                     <option value=" ">-- pilih --</option>
 
                 </select>
@@ -25,7 +23,7 @@ function tambahLaundry(){
         <div class="row mb-3">
             <label for="example-text-input" class="mb-2">Jenis Item</label>
             <div class="col-sm-12">
-                <select name="item_id[]" class="form-select" id="jenis_item">
+                <select name="item_id[]" class="form-select" id="jenis_item`+loop+`">
                     <option value=" ">-- pilih --</option>
 
                 </select>
@@ -37,7 +35,7 @@ function tambahLaundry(){
         <div class="row mb-3">
             <label for="example-text-input" class="mb-2">Jenis Cucian</label>
             <div class="col-sm-12">
-                <select name="jenis_cucian[]" class="form-select" id="jenis_cucian">
+                <select name="jenis_cucian[]" class="form-select" id="jenis_cucian`+loop+`">
                     <option value=" ">-- pilih --</option>
 
                 </select>
@@ -52,10 +50,10 @@ function tambahLaundry(){
                 <div class="col-sm-12" id="hitungan">
                     <div class="input-group">
                         <span class="input-group-text">Rp</span>
-                        <input type="number" class="form-control" id='harga' readonly>
+                        <input type="number" class="form-control" id="harga`+loop+`" readonly>
                         <span class="input-group-text">X</span>
-                        <input type="text" class="form-control" name="jumlah" min='0'
-                            id="jumlah_laundry">
+                        <input type="number" class="form-control" name="jumlah[]" min="0"
+                            id="jumlah_laundry`+loop+`">
                         <span class="input-group-text">Kg-M-Item</span>
 
                     </div>
@@ -69,7 +67,7 @@ function tambahLaundry(){
                 <div class="col-sm-12" id="hitungan">
                     <div class="input-group">
                         <span class="input-group-text">Rp</span>
-                        <input type="number" class="form-control" id='biaya_laundry' disabled>
+                        <input type="number" name="biaya_laundry[]" class="form-control" id="biaya_laundry`+loop+`" >
                     </div> 
                 </div>
             </div>
@@ -81,14 +79,50 @@ function tambahLaundry(){
         <hr>
         </div>`;
     $('.tambah').append(data);
+    $.ajax({
+        url: url+"/tipelaundry/show",
+        method: "get",
+        processData: false,
+        dataType: "json",
+        contentType: false,
+        success: function (data) {
+          $.each(data,function (i,val) {
+            $('#tipelaundry_id'+loop).append(`<option value='`+val.id+`'>`+val.name_tipe+`</option>`)
+          })
+           changetipe(loop)
+        }
+    });
 };
 
-$("body").on("click",".remove",function(){ 
-    $(this).parents(".control-group").remove();
-});
- 
-   
-   $('#jenis_item').on('change',function () {
+function changetipe(loop) {
+    $('#tipelaundry_id'+loop).on('change',function () {
+        let val = $(this).val();
+        $.ajax({ 
+            type: 'GET', 
+            url:url+'/item_laundry/findbyidtipe', 
+            data: { 
+                id: val,
+            }, 
+            dataType: 'json',
+            beforeSend:function () {
+                $('#jenis_item'+loop).html(' ')
+            },
+            success: function (data) {
+              
+                $('#jenis_item'+loop).html('<option value=" ">-- pilih --</option>')
+                $.each(data,function (i,val) {
+                    $('#jenis_item'+loop).append(`<option value='`+val.id+`'>`+val.name_item+`</option>`);
+                    
+                })
+                changejenis(loop)
+            }
+        });
+    })
+}
+
+
+function changejenis(loop) {
+    $('#jenis_item'+loop).on('change',function () {
         let itempaket_id = $(this).val();
      
       
@@ -100,23 +134,27 @@ $("body").on("click",".remove",function(){
             success: function (data) { 
                 
                 if (data.hitungan == "perkilo") {
-                   $('#jenis_cucian').html(`<option value=' '>-- pilih --</option><option value='express'>Express</option><option value='oneday'>One day</option><option value='reguler'>Reguler</option>`);
+                   $('#jenis_cucian'+loop).html(`<option value=' '>-- pilih --</option><option value='express'>Express</option><option value='oneday'>One day</option><option value='reguler'>Reguler</option>`);
                 }else if (data.hitungan == "peritem") {
-                    $('#jenis_cucian').html(`<option value=' '>-- pilih --</option><option value='express'>Express</option><option value='oneday'>One day</option><option value='reguler'>Reguler</option>`);
+                    $('#jenis_cucian'+loop).html(`<option value=' '>-- pilih --</option><option value='express'>Express</option><option value='oneday'>One day</option><option value='reguler'>Reguler</option>`);
                 }else if (data.hitungan == "permeter") {
-                    $('#jenis_cucian').html(`<option value=' '>-- pilih --</option><option value='reguler'>Reguler</option>`);
+                    $('#jenis_cucian'+loop).html(`<option value=' '>-- pilih --</option><option value='reguler'>Reguler</option>`);
                 }
                
+                changecucian(loop)
             },
             error:function () {
-                $('#jenis_cucian').html(`<option value=' '>-- pilih --</option>`); 
+                $('#jenis_cucian'+loop).html(`<option value=' '>-- pilih --</option>`); 
             }
         });
     });
+}
 
-    $('#jenis_cucian').on('change',function () {
+
+function changecucian(loop) {
+    $('#jenis_cucian'+loop).on('change',function () {
         let val = $(this).val();
-        let itempaket_id = $('#jenis_item').val();
+        let itempaket_id = $('#jenis_item'+loop).val();
         $.ajax({ 
             type: 'GET', 
             url:url+'/laundry/findharga', 
@@ -127,32 +165,50 @@ $("body").on("click",".remove",function(){
             dataType: 'json',
             success: function (data) { 
                 if (val == 'reguler') {
-                    $('#harga').val(data[0].harga_reguler);
+                    $('#harga'+loop).val(data[0].harga_reguler);
                 } else if(val == 'oneday'){
-                    $('#harga').val(data[0].harga_oneday);
+                    $('#harga'+loop).val(data[0].harga_oneday);
                 }else if(val == 'express'){
-                    $('#harga').val(data[0].harga_express);
+                    $('#harga'+loop).val(data[0].harga_express);
                 }
-                
+                keyupjumlah(loop);
             }
         });
     });
+}
 
-    $('#jumlah_laundry').on('keyup change', function () {
-        let harga = $('#harga').val()
-        let jumlah = $(this).val()
+$("body").on("click",".remove",function(){ 
+    $(this).parents(".control-group").remove();
+});
+ 
+   
+function keyupjumlah(loop) {
+    $('#jumlah_laundry'+loop).on('keyup change', function () {
+        let harga = parseFloat($('#harga'+loop).val())
+        let jumlah = parseFloat($(this).val()) 
         let hasil = harga*jumlah;
-        $('#biaya_laundry').val(hasil)
-        $('#total_biaya').val(hasil)
-    })
+        $('#biaya_laundry'+loop).val(parseFloat(hasil))
 
+        let total_biaya = $('input[name="biaya_laundry[]"]');
+        let total = 0;
+        $.each(total_biaya,function () {
+             total += +parseFloat($(this).val());
+            
+        });
+        $('#total_biaya').val(total)
+        keyupdiskon(total)
+    })
+}
+   
+function keyupdiskon(total) {
     $('#diskon').on('keyup change',function () {
-        // console.log('hai');
-        let biaya_laundry = $('#biaya_laundry').val()
+        
         let diskon = $(this).val()
-        let hasil = biaya_laundry - diskon;
+        let hasil = total - diskon;
         $('#total_biaya').val(hasil)
     });
+}
+   
 
     $('#biaya_lainya').on('keyup change',function () {
         // console.log('hai');
@@ -196,23 +252,7 @@ $("body").on("click",".remove",function(){
         });
     });
 
-showdatatipe()
 
-function showdatatipe() {
-    $.ajax({
-        url: url+"/tipelaundry/show",
-        method: "get",
-        processData: false,
-        dataType: "json",
-        contentType: false,
-        success: function (data) {
-          $.each(data,function (i,val) {
-            $('select[name="tipelaundry_id[]"]').append(`<option value='`+val.id+`'>`+val.name_tipe+`</option>`)
-          })
-           
-        }
-    });
-}
 
 showdatakonsumen()
 function showdatakonsumen() {
@@ -242,6 +282,7 @@ $('select[name="konsumen"]').on('change',function () {
             contentType: false,
             success: function (data) {
               console.log(data);
+              $('input[name="code"]').val(data.code);
              $('input[name="name"]').val(data.name);
              $('input[name="phone_number"]').val(data.phone_number);
              $('input[name="email"]').val(data.email);
@@ -253,27 +294,7 @@ $('select[name="konsumen"]').on('change',function () {
 })
 
 
-$('select[name="tipelaundry_id[]"]').on('change',function () {
-    let val = $(this).val();
-    $.ajax({ 
-        type: 'GET', 
-        url:url+'/item_laundry/findbyidtipe', 
-        data: { 
-            id: val,
-        }, 
-        dataType: 'json',
-        beforeSend:function () {
-            $('select[name="item_id[]"]').html(' ')
-        },
-        success: function (data) {
-            $('select[name="item_id[]"]').html('<option value=" ">-- pilih --</option>')
-            $.each(data,function (i,val) {
-                $('select[name="item_id[]"]').append(`<option value='`+val.id+`'>`+val.name_item+`</option>`);
-            })
-            
-        }
-    });
-})
+
     $(document).on('click','.open_modal_status',function () {
         let id_laundry= $(this).val();
         $('#id_item').val(id_laundry);

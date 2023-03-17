@@ -9,13 +9,13 @@ class Laundry extends Model
 {
     use HasFactory;
     protected $table = "laundries";
-    protected $fillable = ["item_id", "consument_id", "jenis_cucian", "jumlah", "total_biaya"];
+    protected $fillable = ["item_id", "pembayaran_id",  "jenis_cucian", "jumlah", "biaya_laundry"];
     public function item()
     {
         return $this->belongsTo(Item::class);
     }
-    public function consument()
+    public function pembayaran()
     {
-        return $this->belongsTo(Consument::class);
+        return $this->belongsTo(Pembayaran::class);
     }
 }

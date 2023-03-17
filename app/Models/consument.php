@@ -10,8 +10,8 @@ class Consument extends Model
     use HasFactory;
     protected $table = "consuments";
     protected $fillable = ["code", "name", "address", "phone_number", "email"];
-    public function laundry()
+    public function pembayaran()
     {
-        return $this->hasMany(Laundry::class);
+        return $this->hasMany(Pembayaran::class);
     }
 }

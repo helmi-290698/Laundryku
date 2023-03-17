@@ -33,12 +33,13 @@
                                         <select name="konsumen" class="form-control select2" id="konsumen">
                                             <option value=" ">-- pilih --</option>
                                         </select>
-                                        <span class="text-danger text-error name_error"></span>
+
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="example-text-input" class="mb-2">Nama :</label>
                                     <div class="col-sm-12">
+                                        <input class="form-control" type="hidden" name="code">
                                         <input class="form-control" type="text" name="name" placeholder="John doe"
                                             id="example-text-input">
                                         <span class="text-danger text-error name_error"></span>
@@ -94,7 +95,7 @@
                                         <div class="col-sm-12" id="hitungan">
                                             <div class="input-group">
                                                 <span class="input-group-text">Rp</span>
-                                                <input type="number" class="form-control" id='diskon'>
+                                                <input type="number" name="diskon" class="form-control" id='diskon'>
                                             </div>
                                         </div>
                                     </div>
@@ -103,7 +104,8 @@
                                         <div class="col-sm-12" id="hitungan">
                                             <div class="input-group">
                                                 <span class="input-group-text">Rp</span>
-                                                <input type="number" class="form-control" id='biaya_lainya'>
+                                                <input type="number" name="biaya_lainya" class="form-control"
+                                                    id='biaya_lainya'>
                                             </div>
                                         </div>
                                     </div>
