@@ -43,6 +43,12 @@ class LaundryController extends Controller
         $title = "Data Laundry";
         return $datatable->render('admin.datalaundry', ['title' => $title]);
     }
+
+    public function find($id)
+    {
+        $data = Laundry::find($id);
+        return $data;
+    }
     /**
      * Show the form for creating a new resource.
      *

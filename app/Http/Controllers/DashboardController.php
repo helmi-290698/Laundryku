@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laundry;
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -15,7 +16,7 @@ class DashboardController extends Controller
     public function index()
     {
         $title = "Dashboard";
-        $omset = Laundry::where('status', '=', 'selesai')->sum('total_biaya');
+        $omset = Pembayaran::where('status', '=', 'selesai')->sum('total_biaya');
         $laundry = Laundry::all();
         $statusdone = Laundry::where('status', '=', 'selesai')->get();
         $statusprocess = Laundry::where('status', '!=', 'selesai')->get();

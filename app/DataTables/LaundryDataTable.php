@@ -29,13 +29,31 @@ class LaundryDataTable extends DataTable
 
                 return $data->item->name_item;
             })
-            ->addColumn('total_biaya', function ($data) {
+            ->filterColumn('nama_item', function ($query, $keyword) {
+                $query->whereHas('item', function ($query) use ($keyword) {
+                    $sql = "CONCAT(items.name_item) like ?";
+                    $query->whereRaw($sql, ["%{$keyword}%"]);
+                });
+            })
+            ->addColumn('biaya_laundry', function ($data) {
 
-                return 'Rp ' . number_format($data->total_biaya);
+                return 'Rp ' . number_format($data->biaya_laundry);
+            })
+            ->filterColumn('biaya_laundry', function ($query, $keyword) {
+                $sql = "CONCAT(laundries.biaya_laundry) like ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
             })
             ->addColumn('tipe', function ($data) {
 
-                return $data->item->tipelaundry->name_tipe;
+                return '<span class="badge bg-success rounded-pill">' . $data->item->tipelaundry->name_tipe . '</span>';
+            })
+            ->filterColumn('tipe', function ($query, $keyword) {
+                $query->whereHas('item', function ($query2) use ($keyword) {
+                    $query2->whereHas('tipelaundry', function ($query2) use ($keyword) {
+                        $sql = "CONCAT(tipelaundries.name_tipe) like ?";
+                        $query2->whereRaw($sql, ["%{$keyword}%"]);
+                    });
+                });
             })
 
             ->addColumn('jumlah', function ($data) {
@@ -58,30 +76,39 @@ class LaundryDataTable extends DataTable
             })
             ->addColumn('nama_konsumen', function ($data) {
 
-                return "<a href='javascript: void(0);' class='text-muted open-modal-konsumen' data-id='" . $data->consument->id . "' ><i class='fa fa-user'></i> " . $data->consument->name . "</a>";
-            })->filterColumn('jumlah', function ($query, $keyword) {
-                $sql = "CONCAT(laundries.consument_id) like ?";
-                $query->whereRaw($sql, ["%{$keyword}%"]);
+                return "<a href='javascript: void(0);' class='text-muted open-modal-konsumen' data-id='" . $data->pembayaran->consument->id . "' ><i class='fa fa-user'></i> " . $data->pembayaran->consument->name . "</a>";
+            })
+            ->filterColumn('nama_konsumen', function ($query, $keyword) {
+                $query->whereHas('pembayaran', function ($query2) use ($keyword) {
+                    $query2->whereHas('consument', function ($query2) use ($keyword) {
+                        $sql = "CONCAT(consuments.name) like ?";
+                        $query2->whereRaw($sql, ["%{$keyword}%"]);
+                    });
+                });
             })
             ->addColumn('status', function ($data) {
 
                 if ($data->status == 'antrian') {
-                    $raw = "<button class='btn btn-primary btn-sm open_modal_status' value='" . $data->id . "'><i class='fas fa-ticket-alt'></i> " . $data->status . "</button>";
+                    $raw = "<a href='javascript: void(0);' class='btn btn-primary btn-sm open-modal-status' data-id='" . $data->id . "' ><i class='fas fa-ticket-alt'></i> " . $data->status . "</a>";
                 } else if ($data->status == 'cuci') {
-                    $raw = "<button class='btn btn-warning btn-sm open_modal_status' value='" . $data->id . "'><i class='fa fa-soap'></i> " . $data->status . "</button>";
+                    $raw = "<a href='javascript: void(0);' class='btn btn-warning btn-sm open-modal-status' data-id='" . $data->id . "' ><i class='fas fa-ticket-alt'></i> " . $data->status . "</a>";
                 } else if ($data->status == 'setrika') {
-                    $raw = "<button class='btn btn-warning btn-sm open_modal_status' value='" . $data->id . "'><i class='fas fa-tshirt'></i> " . $data->status . "</button>";
+                    $raw = "<a href='javascript: void(0);' class='btn btn-warning btn-sm open-modal-status' data-id='" . $data->id . "' ><i class='fas fa-ticket-alt'></i> " . $data->status . "</a>";
                 } else if ($data->status == 'packing') {
-                    $raw = "<button class='btn btn-danger btn-sm open_modal_status' value='" . $data->id . "'><i class='fas fa-box'></i> " . $data->status . "</button>";
+                    $raw = "<a href='javascript: void(0);' class='btn btn-danger btn-sm open-modal-status' data-id='" . $data->id . "' ><i class='fas fa-ticket-alt'></i> " . $data->status . "</a>";
                 } else if ($data->status == 'selesai') {
-                    $raw = "<button class='btn btn-success btn-sm open_modal_status' value='" . $data->id . "'><i class='fas fa-check-square'></i> " . $data->status . "</button>";
+                    $raw = "<a href='javascript: void(0);' class='btn btn-success btn-sm open-modal-status' data-id='" . $data->id . "' ><i class='fas fa-ticket-alt'></i> " . $data->status . "</a>";
                 }
                 return $raw;
             })
+            ->filterColumn('status', function ($query, $keyword) {
+                $sql = "CONCAT(laundries.status) like ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
+            })
             ->addColumn('action', function ($data) {
                 $csrf = csrf_token();
-                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'><i class='fas fa-edit' aria-hidden='true'></i></button>&nbsp; <button type='button' onclick='deleteLaundry(" . $data->id . ")' value='" . $csrf . "' class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button></button>";
-            })->rawColumns(['status', 'nama_konsumen', 'tipe', 'jumlah', 'nama_item', 'action']);
+                return "<button class='btn btn-primary btn-sm open_modal' value='" . $data->id . "'><i class='fas fa-file-alt' aria-hidden='true'></i></button>&nbsp;<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'><i class='fas fa-edit' aria-hidden='true'></i></button>&nbsp; <button type='button' onclick='deleteLaundry(" . $data->id . ")' value='" . $csrf . "' class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button></button>";
+            })->rawColumns(['status', 'nama_konsumen', 'tipe', 'jumlah', 'biaya_laundry', 'nama_item', 'action']);
     }
 
     /**
@@ -92,9 +119,9 @@ class LaundryDataTable extends DataTable
      */
     public function query(Laundry $model): QueryBuilder
     {
-        $laundry = laundry::with('consument');
+        // $laundry = laundry::all('consument');
 
-        return $laundry->newQuery();
+        return $model->newQuery();
     }
 
     /**
@@ -126,11 +153,14 @@ class LaundryDataTable extends DataTable
             Column::make('id'),
             Column::make('nama_konsumen'),
             Column::make('nama_item'),
-            Column::make('tipe'),
+            Column::make('tipe')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60),
             Column::make('jenis_cucian'),
             Column::make('jumlah'),
-            Column::computed('total_biaya'),
-            Column::computed('status')
+            Column::make('biaya_laundry'),
+            Column::make('status')
                 ->exportable(false)
                 ->printable(false)
                 ->width(100)

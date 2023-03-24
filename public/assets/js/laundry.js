@@ -263,7 +263,6 @@ function showdatakonsumen() {
         dataType: "json",
         contentType: false,
         success: function (data) {
-            console.log(data);
           $.each(data,function (i,val) {
             $('select[name="konsumen"]').append(`<option value='`+val.id+`'>`+val.code+` - `+val.name+`</option>`)
           })
@@ -320,6 +319,22 @@ $('select[name="konsumen"]').on('change',function () {
             }
         });
         $('#modal_konsumen').modal('show');
+    })
+    $(document).on('click','.open-modal-status',function () {
+        let laundry_id= $(this).data('id');
+      
+           $.ajax({
+            url: url+"/laundry/find/"+laundry_id,
+            method: "get",
+            processData: false,
+            dataType: "json",
+            contentType: false,
+            success: function (data) {
+                $('#id_item').val(laundry_id)
+                $("#status_select").find("option[value=" + data.status +"]").attr('selected', true);
+            }
+        });
+       $('#modal_status').modal('show');
     })
 
     $('#update-status-laundry').on("submit", function(e) {

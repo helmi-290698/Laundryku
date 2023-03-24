@@ -51,7 +51,7 @@
                             <option value="cuci">Cuci</option>
                             <option value="setrika">Setrika</option>
                             <option value="packing">Packing</option>
-                            <option value="selesai">Selsai</option>
+                            <option value="selesai">Selesai</option>
                         </select>
                         <span class="text-danger text-error status_error"></span>
                     </div>

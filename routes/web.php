@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItempaketController;
 use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TipelaundryController;
 use App\Models\Item;
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/laundry', [LaundryController::class, 'index'])->name('laundry');
+    Route::get('/laundry/find/{id}', [LaundryController::class, 'find'])->name('laundry_find');
     Route::get('/datalaundry', [LaundryController::class, 'datatablelaundry'])->name('data_laundry');
     Route::get('/laundry/findharga', [LaundryController::class, 'getharga'])->name('getharga_laundry');
     Route::post('/laundry/store', [LaundryController::class, 'store'])->name('store_laundry');
@@ -72,6 +74,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran');
+    Route::get('/pembayaran/find/{id}', [PembayaranController::class, 'find'])->name('pembayaran_find');
+    Route::post('/pembayaran/edit', [PembayaranController::class, 'update'])->name('pembayaran_edit');
 });
 
 require __DIR__ . '/auth.php';

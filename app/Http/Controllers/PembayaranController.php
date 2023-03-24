@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\PembayaranDataTable;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,10 @@ class PembayaranController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PembayaranDataTable $datatable)
     {
-        //
+        $title = "Data Pembayaran";
+        return $datatable->render('admin.datapembayaran', ['title' => $title]);
     }
 
     /**
@@ -48,6 +50,12 @@ class PembayaranController extends Controller
     {
         //
     }
+    public function find($id)
+    {
+        $data = Pembayaran::find($id);
+        return $data;
+    }
+
 
     /**
      * Show the form for editing the specified resource.

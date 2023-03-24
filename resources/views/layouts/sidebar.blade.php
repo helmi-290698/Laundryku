@@ -21,9 +21,15 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ url('/pembayaran') }}" class=" waves-effect">
+                        <i class="ti-money"></i>
+                        <span>Pembayaran</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ url('/datalaundry') }}" class=" waves-effect">
                         <i class="ti-view-grid"></i>
-                        <span>Data Laundry</span>
+                        <span>Laundry</span>
                     </a>
                 </li>
                 <li>
