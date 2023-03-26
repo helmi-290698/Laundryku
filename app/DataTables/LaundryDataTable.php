@@ -107,7 +107,13 @@ class LaundryDataTable extends DataTable
             })
             ->addColumn('action', function ($data) {
                 $csrf = csrf_token();
-                return "<button class='btn btn-primary btn-sm open_modal' value='" . $data->id . "'><i class='fas fa-file-alt' aria-hidden='true'></i></button>&nbsp;<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'><i class='fas fa-edit' aria-hidden='true'></i></button>&nbsp; <button type='button' onclick='deleteLaundry(" . $data->id . ")' value='" . $csrf . "' class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button></button>";
+                if ($data->status == 'antrian') {
+                    $data = "<button class='btn btn-primary btn-sm open_modal' value='" . $data->id . "'><i class='fas fa-file-alt' aria-hidden='true'></i></button>&nbsp;<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'  ><i class='fas fa-edit' aria-hidden='true'></i></button>&nbsp; <button type='button' onclick='deleteLaundry(" . $data->id . ")' value='" . $csrf . "' class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button>";
+                } else {
+                    $data = "<button class='btn btn-primary btn-sm open_modal' value='" . $data->id . "'><i class='fas fa-file-alt' aria-hidden='true'></i></button>&nbsp;<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'  disabled><i class='fas fa-edit' aria-hidden='true'></i></button>&nbsp; <button type='button' onclick='deleteLaundry(" . $data->id . ")' value='" . $csrf . "' class='btn btn-danger btn-sm' disabled><i class='fas fa-trash-alt'></i></button>";
+                }
+
+                return $data;
             })->rawColumns(['status', 'nama_konsumen', 'tipe', 'jumlah', 'biaya_laundry', 'nama_item', 'action']);
     }
 

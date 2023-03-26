@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\PembayaranDataTable;
+use App\Models\Laundry;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PembayaranController extends Controller
 {
@@ -17,6 +19,12 @@ class PembayaranController extends Controller
     {
         $title = "Data Pembayaran";
         return $datatable->render('admin.datapembayaran', ['title' => $title]);
+    }
+
+    public function invoice()
+    {
+        $title = "Invoice";
+        return view('admin.invoice', ['title' => $title]);
     }
 
     /**
@@ -63,9 +71,23 @@ class PembayaranController extends Controller
      * @param  \App\Models\Pembayaran  $pembayaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pembayaran $pembayaran)
+    public function edit(Request $request)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'id' => 'required',
+            'status' => 'required',
+
+        ]);
+
+        if ($validatedData->fails()) {
+            return response()->json(['status' => 0, 'error' => $validatedData->errors()]);
+        }
+
+        $pembayaran = [
+            'status' => $request->status,
+        ];
+        Pembayaran::where("id", $request->id)->update($pembayaran);
+        return response()->json(['status' => 1, 'message' => 'Update Data sucessfully']);
     }
 
     /**
@@ -86,8 +108,10 @@ class PembayaranController extends Controller
      * @param  \App\Models\Pembayaran  $pembayaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pembayaran $pembayaran)
+    public function destroy($id)
     {
-        //
+        Pembayaran::destroy($id);
+        Laundry::where('pembayaran_id', $id)->delete();
+        return response()->json(['status' => true, 'message' => 'Delete data Successfully!']);
     }
 }

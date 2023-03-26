@@ -78,7 +78,9 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran');
     Route::get('/pembayaran/find/{id}', [PembayaranController::class, 'find'])->name('pembayaran_find');
-    Route::post('/pembayaran/edit', [PembayaranController::class, 'update'])->name('pembayaran_edit');
+    Route::post('/pembayaran/edit', [PembayaranController::class, 'edit'])->name('pembayaran_edit');
+    Route::get('/pembayaran/invoice/{id}', [PembayaranController::class, 'invoice'])->name('pembayaran_invoice');
+    Route::delete('/pembayaran/delete/{id}', [PembayaranController::class, 'destroy'])->name('delete_pembayaran');
 });
 
 require __DIR__ . '/auth.php';

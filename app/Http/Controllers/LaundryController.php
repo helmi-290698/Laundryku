@@ -75,7 +75,8 @@ class LaundryController extends Controller
             'item_id' => 'required',
             'jenis_cucian' => 'required',
             'jumlah' => 'required',
-            'total_biaya' => 'required|numeric'
+            'total_biaya' => 'required|numeric',
+            'tanggal_masuk' => 'required'
         ]);
 
         if ($validatedData->fails()) {
@@ -190,6 +191,16 @@ class LaundryController extends Controller
      */
     public function destroy($id)
     {
+        $data = Laundry::find($id);
+
+        $pembayaran = Pembayaran::find($data->pembayaran_id);
+        $kurangi = $pembayaran->total_biaya - $data->biaya_laundry;
+
+        $update = [
+            'total_biaya' => $kurangi
+        ];
+
+        Pembayaran::where('id', $data->pembayaran_id)->update($update);
         Laundry::destroy($id);
         return response()->json(['status' => true, 'message' => 'Delete data Successfully!']);
     }

@@ -45,3 +45,32 @@ $('#update-status-pembayaran').on("submit", function(e) {
         },
     });
 });
+
+function deletePembayaran(data) {
+    let token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: url+"/pembayaran/delete/"+data,
+            method: "delete",
+            data:{
+                '_token': token
+            },
+            beforeSend:function(){
+                return confirm("Are you sure?");
+             },
+            success: function (data) {
+               alert(data.message);
+                window.location.href = url+"/pembayaran";
+               
+            }
+        });
+    }
+
+    function alert(data) {
+        Toastify({
+            text: data ,
+            className: "info",
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+          }).showToast();
+    }
