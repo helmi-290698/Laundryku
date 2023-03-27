@@ -600,7 +600,6 @@
 @push('plugin-js')
     <!-- Peity chart-->
     <script src="{{ asset('assets/libs/peity/jquery.peity.min.js') }}"></script>
-
     <!-- Plugin Js-->
     <script src="{{ asset('assets/libs/chartist/chartist.min.js') }}"></script>
     <script src="{{ asset('assets/libs/chartist-plugin-tooltips/chartist-plugin-tooltip.min.js') }}"></script>

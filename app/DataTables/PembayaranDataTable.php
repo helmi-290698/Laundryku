@@ -62,7 +62,7 @@ class PembayaranDataTable extends DataTable
             })
             ->addColumn('action', function ($data) {
                 $csrf = csrf_token();
-                return "<a href='/pembayaran/invoice/" . $data->id . "' class='btn btn-primary btn-sm'><i class='fas fa-file-invoice-dollar' aria-hidden='true'></i></a>&nbsp; <button type='button' onclick='deletePembayaran(" . $data->id . ")'  class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button></button>";
+                return "<a href='" . route('pembayaran_invoice', $data->id) . "' class='btn btn-primary btn-sm'><i class='fas fa-file-invoice-dollar' aria-hidden='true'></i></a>&nbsp; <button type='button' onclick='deletePembayaran(" . $data->id . ")'  class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button></button>";
             })
             ->rawColumns(['status', 'nama_konsumen', 'total_biaya', 'diskon', 'biaya_lainya', 'action'])
             ->setRowId('id');
