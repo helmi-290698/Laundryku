@@ -1,47 +1,107 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!doctype html>
+<html lang="en">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<head>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    <meta charset="utf-8">
+    <title>Login 2 | Veltrix - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+
+    <!-- Bootstrap Css -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- Icons Css -->
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- App Css-->
+    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="account-pages">
+    <!-- Begin page -->
+    <div class="accountbg"
+        style="background: url('assets/images/bg.jpg');background-size: cover;background-position: center;"></div>
+
+    <div class="wrapper-page account-page-full">
+
+        <div class="card shadow-none">
+            <div class="card-block">
+
+                <div class="account-box">
+
+                    <div class="card-box shadow-none p-4">
+                        <div class="p-2">
+                            <div class="text-center mt-4">
+                                <a href="index.html"><img src="{{ asset('assets/images/logo-dark.png') }}"
+                                        height="22" alt="logo"></a>
+                            </div>
+
+                            <h4 class="font-size-18 mt-5 text-center">Welcome Back !</h4>
+                            <p class="text-muted text-center">Sign in to continue to Veltrix.</p>
+
+                            <form class="mt-4" method="post" action="{{ route('login') }}">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label" for="username">Username</label>
+                                    <input type="email" name="email" class="form-control" placeholder="Enter email">
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="userpassword">Password</label>
+                                    <input type="password" name="password" class="form-control"
+                                        placeholder="Enter password">
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <div class="col-sm-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="customControlInline">
+                                            <label class="form-check-label" for="customControlInline">Remember
+                                                me</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end">
+                                        <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Log
+                                            In</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="mt-5 pt-4 text-center">
+
+                                <p>©
+                                    <script>
+                                        document.write(new Date().getFullYear())
+                                    </script> Jarina Laundry. Crafted with <i
+                                        class="mdi mdi-heart text-danger"></i> by Hybrid Plus
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+    <!-- JAVASCRIPT -->
+    <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/metismenu/metisMenu.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
 
-            <x-primary-button class="ml-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+
+</body>
+
+</html>

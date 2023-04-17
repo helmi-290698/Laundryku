@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @push('plugin-css')
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" media="print">
 @endpush
 @section('content')
     <div class="page-title-box">
@@ -11,142 +12,89 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
                 </ol>
             </div>
+            <div class="col-md-4">
+                <div class="float-end d-none d-md-block">
+                    <div class="dropdown">
+                        <button class="btn btn-primary" type="button" id="cetak">
+                            Cetak
+                        </button>
 
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12">
+    <div class="row justify-content-center">
+        <div class="col-5">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" id="data">
+                    <h4 class="text-center">
+                        Jarina Laundry</h4>
+                    <p class="text-center mb-0"> Jl. Kol A Syam Komplek Puri Indah Rw 07 Cikeruh Jatinangor Sumedang </p>
+                    <p class="text-center">HP/WA :
+                        081211243356, 087718320777</p>
+                    <hr />
                     <div class="row">
+                        <div class="col-6">
+                            <h6> Order ID</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="float-end">TRX/083377/2023</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6> Pelanggan</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="float-end">Agnia Risdina Gunawan</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6> Tgl Pesan </h6>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="float-end">16-04-23 19:19</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6> Tgl Selesai</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="float-end">19-04-23 19:19</h6>
+                        </div>
+                        <hr />
+                        <div class="col-12 ">
+                            <h6 class="mb-0">Jaket Reguler 3 Hari</h6>
+                        </div>
+                        <div class="col-6">
+                            <p>4.5 X 7000</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="float-end">31000</p>
+                        </div>
+                        <hr />
+                        <div class="col-6">
+                            <h6> Total Harga</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="float-end">31000</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6> Dibayar</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="float-end">0</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6> Kurang</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="float-end">31000</h6>
+                        </div>
+                        <hr />
                         <div class="col-12">
-                            <div class="invoice-title">
-                                <h4 class="float-end font-size-16"><strong>Order # 12345</strong></h4>
-                                <h3>
-                                    <img src="{{ asset('assets/images/logo-sm.png') }}" alt="logo" height="24" />
-                                </h3>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-6">
-                                    <address>
-                                        <strong>Billed To:</strong><br>
-                                        John Smith<br>
-                                        1234 Main<br>
-                                        Apt. 4B<br>
-                                        Springfield, ST 54321
-                                    </address>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <address>
-                                        <strong>Shipped To:</strong><br>
-                                        Kenny Rigdon<br>
-                                        1234 Main<br>
-                                        Apt. 4B<br>
-                                        Springfield, ST 54321
-                                    </address>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 mt-4">
-                                    <address>
-                                        <strong>Payment Method:</strong><br>
-                                        Visa ending **** 4242<br>
-                                        jsmith@email.com
-                                    </address>
-                                </div>
-                                <div class="col-6 mt-4 text-end">
-                                    <address>
-                                        <strong>Order Date:</strong><br>
-                                        January 16, 2019<br><br>
-                                    </address>
-                                </div>
-                            </div>
+                            <h6>Catatan : Saat Pengambilan barang sertakan struk pengambilan</h6>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div>
-                                <div class="p-2">
-                                    <h3 class="font-size-16"><strong>Order summary</strong></h3>
-                                </div>
-                                <div class="">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <td><strong>Item</strong></td>
-                                                    <td class="text-center"><strong>Price</strong></td>
-                                                    <td class="text-center"><strong>Quantity</strong>
-                                                    </td>
-                                                    <td class="text-end"><strong>Totals</strong></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- foreach ($order->lineItems as $line) or some such thing here -->
-                                                <tr>
-                                                    <td>BS-200</td>
-                                                    <td class="text-center">$10.99</td>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-end">$10.99</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>BS-400</td>
-                                                    <td class="text-center">$20.00</td>
-                                                    <td class="text-center">3</td>
-                                                    <td class="text-end">$60.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>BS-1000</td>
-                                                    <td class="text-center">$600.00</td>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-end">$600.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="thick-line"></td>
-                                                    <td class="thick-line"></td>
-                                                    <td class="thick-line text-center">
-                                                        <strong>Subtotal</strong>
-                                                    </td>
-                                                    <td class="thick-line text-end">$670.99</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="no-line"></td>
-                                                    <td class="no-line"></td>
-                                                    <td class="no-line text-center">
-                                                        <strong>Shipping</strong>
-                                                    </td>
-                                                    <td class="no-line text-end">$15</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="no-line"></td>
-                                                    <td class="no-line"></td>
-                                                    <td class="no-line text-center">
-                                                        <strong>Total</strong>
-                                                    </td>
-                                                    <td class="no-line text-end">
-                                                        <h4 class="m-0">$685.99</h4>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div class="d-print-none">
-                                        <div class="float-end">
-                                            <a href="javascript:window.print()"
-                                                class="btn btn-success waves-effect waves-light"><i
-                                                    class="fa fa-print"></i></a>
-                                            <a href="#" class="btn btn-primary waves-effect waves-light">Send</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div> <!-- end row -->
                 </div>
             </div>
         </div> <!-- end col -->
@@ -155,5 +103,19 @@
 @push('plugin-js')
     <script>
         let url = `{{ url('/') }}`;
+    </script>
+    <script src="{{ asset('plugins/printarea/demo/jquery.PrintArea.js') }}"></script>
+    <script>
+        (function($) {
+            // fungsi dijalankan setelah seluruh dokumen ditampilkan
+            $(document).ready(function(e) {
+
+                // aksi ketika tombol cetak ditekan
+                $("#cetak").bind("click", function(event) {
+                    // cetak data pada area <div id="#data-mahasiswa"></div>
+                    $('#data').printArea();
+                });
+            });
+        })(jQuery);
     </script>
 @endpush
