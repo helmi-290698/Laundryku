@@ -194,13 +194,18 @@ class LaundryController extends Controller
         $data = Laundry::find($id);
 
         $pembayaran = Pembayaran::find($data->pembayaran_id);
-        $kurangi = $pembayaran->total_biaya - $data->biaya_laundry;
 
-        $update = [
-            'total_biaya' => $kurangi
-        ];
+        if ($pembayaran->total_biaya == $data->biaya_laundry) {
+            Pembayaran::where('id', $data->pembayaran_id)->delete();
+        } else {
+            $kurangi = $pembayaran->total_biaya - $data->biaya_laundry;
 
-        Pembayaran::where('id', $data->pembayaran_id)->update($update);
+            $update = [
+                'total_biaya' => $kurangi
+            ];
+            Pembayaran::where('id', $data->pembayaran_id)->update($update);
+        }
+
         Laundry::destroy($id);
         return response()->json(['status' => true, 'message' => 'Delete data Successfully!']);
     }

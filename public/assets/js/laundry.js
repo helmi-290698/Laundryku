@@ -197,6 +197,7 @@ function keyupjumlah(loop) {
         });
         $('#total_biaya').val(total)
         keyupdiskon(total)
+        keyupbiayalainya(total)
     })
 }
    
@@ -209,15 +210,18 @@ function keyupdiskon(total) {
     });
 }
    
-
+function keyupbiayalainya(total) {
     $('#biaya_lainya').on('keyup change',function () {
-        // console.log('hai');
-        let biaya_laundry = parseFloat($('#biaya_laundry').val())
+       
+       
         let diskon = parseFloat($('#diskon').val())
         let biaya_lainya = parseFloat($(this).val())
-        let hasil = biaya_laundry - diskon + biaya_lainya;
+        let hasil = total - diskon + biaya_lainya;
         $('#total_biaya').val(hasil)
+       
     });
+}
+    
 
     $("#form_input_laundry").on("submit", function(e) {
     

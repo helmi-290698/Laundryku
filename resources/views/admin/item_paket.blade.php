@@ -32,7 +32,7 @@
                         @csrf
                         <label for="nama_paket" class="form-label">Nama Paket</label>
                         <select name="item_id" id="item" class="form-select">
-
+                            <option value="">--pilih--</option>
                         </select><br>
                         <span class="text-danger text-error id_item_error"></span>
                         <div id="harga">

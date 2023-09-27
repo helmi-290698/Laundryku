@@ -16,6 +16,7 @@ changeItem();
 function changeItem() {
     $('#item').on('change',function () {
         let id_item = $(this).find(':selected').val();
+       
         $.ajax({ 
             type: 'GET', 
             url:url+'/item_laundry/find', 
