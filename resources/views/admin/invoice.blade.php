@@ -46,36 +46,48 @@
                             <h6> Pelanggan</h6>
                         </div>
                         <div class="col-6">
-                            <h6 class="float-end">Agnia Risdina Gunawan</h6>
+                            <h6 class="float-end">{{ $laundry->pembayaran->consument->name }}</h6>
                         </div>
                         <div class="col-6">
                             <h6> Tgl Pesan </h6>
                         </div>
                         <div class="col-6">
-                            <h6 class="float-end">16-04-23 19:19</h6>
+                            <h6 class="float-end">{{ $laundry->pembayaran->tanggal_masuk }}</h6>
                         </div>
                         <div class="col-6">
                             <h6> Tgl Selesai</h6>
                         </div>
                         <div class="col-6">
-                            <h6 class="float-end">19-04-23 19:19</h6>
+                            <h6 class="float-end">0</h6>
                         </div>
                         <hr />
                         <div class="col-12 ">
-                            <h6 class="mb-0">Jaket Reguler 3 Hari</h6>
+                            <h6 class="mb-0">{{ $laundry->item->name_item }} {{ $laundry->jenis_cucian }} 3 Hari</h6>
                         </div>
                         <div class="col-6">
-                            <p>4.5 X 7000</p>
+                            <p>{{ $laundry->jumlah }} X {{ $biaya_item }}</p>
                         </div>
                         <div class="col-6">
-                            <p class="float-end">31000</p>
+                            <p class="float-end">{{ $laundry->biaya_laundry }}</p>
                         </div>
                         <hr />
                         <div class="col-6">
-                            <h6> Total Harga</h6>
+                            <h6> Biaya Laundry</h6>
                         </div>
                         <div class="col-6">
-                            <h6 class="float-end">31000</h6>
+                            <h6 class="float-end">{{ $laundry->biaya_laundry }}</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6> Biaya Lainya</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="float-end">{{ $laundry->pembayaran->biaya_lainya }}</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6> Diskon</h6>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="float-end">{{ $laundry->pembayaran->diskon }}</h6>
                         </div>
                         <div class="col-6">
                             <h6> Dibayar</h6>
@@ -84,10 +96,10 @@
                             <h6 class="float-end">0</h6>
                         </div>
                         <div class="col-6">
-                            <h6> Kurang</h6>
+                            <h6> Total Biaya</h6>
                         </div>
                         <div class="col-6">
-                            <h6 class="float-end">31000</h6>
+                            <h6 class="float-end">{{ $total_biaya }}</h6>
                         </div>
                         <hr />
                         <div class="col-12">

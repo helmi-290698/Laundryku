@@ -29,7 +29,7 @@ class ItempaketDataTable extends DataTable
             })
             ->addColumn('action', function ($data) {
                 $csrf =  csrf_token();
-                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'> edit</button>&nbsp; <button type='button' onclick='deleteItempaket(" . $data->id . ")' class='btn btn-danger btn-sm'>hapus</button>";
+                return "<button class='btn btn-warning btn-sm open_modal' value='" . $data->id . "'> <i class='ti-pencil'></i></button>&nbsp; <button type='button' onclick='deleteItempaket(" . $data->id . ")' class='btn btn-danger btn-sm'><i class='ti-trash'></i></button>";
             });
     }
 

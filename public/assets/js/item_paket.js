@@ -2,7 +2,7 @@ showItem();
 function showItem() {
     $.ajax({
         type: 'GET', 
-        url:url+'/item_laundry/show', 
+        url:url+'/item_laundry/show/nothavepaket', 
         dataType: 'json',
         success: function (data) { 
         data.forEach(hasil => {

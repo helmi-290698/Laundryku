@@ -41,7 +41,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ti-settings"></i>
+                        <i class="ti-server"></i>
                         <span>Data Master</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -50,6 +50,7 @@
                         <li><a href="{{ url('/tipelaundry') }}">Tipe Laundry</a></li>
                     </ul>
                 </li>
+
 
 
 

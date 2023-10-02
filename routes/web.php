@@ -7,6 +7,7 @@ use App\Http\Controllers\ItempaketController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TipelaundryController;
 use App\Models\Item;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/item_laundry/find', [ItemController::class, 'edit'])->name('item_laundry_find');
     Route::get('/item_laundry/findbyidtipe', [ItemController::class, 'getItemByIdtipe'])->name('item_laundry_findbyidtipe');
     Route::get('/item_laundry/show', [ItemController::class, 'show'])->name('item_laundry_show');
+    Route::get('/item_laundry/show/nothavepaket', [ItemController::class, 'showNotHavePaket'])->name('item_laundry_showhavepaket');
     Route::post('/item_laundry/store', [ItemController::class, 'store'])->name('item_laundry_store');
     Route::post('/item_laundry/edit', [ItemController::class, 'update'])->name('item_laundry_edit');
     Route::delete('/item_laundry/delete/{id}', [ItemController::class, 'destroy'])->name('item_laundry_delete');
@@ -74,6 +76,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/setting', [SettingController::class, 'index'])->name('setting');
+    Route::post('/setting/store', [SettingController::class, 'store'])->name('setting.store');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran');

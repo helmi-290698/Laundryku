@@ -77,7 +77,7 @@
                             <label for="hitungan">Hitungan</label>
 
                             <select class="form-select" name="name_item" id="itempaket_select" disabled>
-                                <option>-- Pilih Lembaga --</option>
+                                <option>-- Pilih --</option>
                                 @foreach ($item_paket as $item)
                                     <option value="{{ $item->id }}">{{ $item->name_item }}</option>
                                 @endforeach

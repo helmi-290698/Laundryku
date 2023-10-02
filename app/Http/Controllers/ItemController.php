@@ -67,6 +67,13 @@ class ItemController extends Controller
 
         return $data;
     }
+
+    public function showNotHavePaket()
+    {
+        $data = Item::doesntHave('itempaket')->get();
+
+        return $data;
+    }
     public function getItemByIdtipe(Request $request)
     {
         $data = item::with('itempaket')->where('tipelaundry_id', '=', $request->id)->get();

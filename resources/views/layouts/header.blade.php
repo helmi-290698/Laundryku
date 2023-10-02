@@ -167,7 +167,7 @@
                     <!-- item-->
                     <a class="dropdown-item" href="#"><i
                             class="mdi mdi-account-circle font-size-17 align-middle me-1"></i> Profile</a>
-                    <a class="dropdown-item d-flex align-items-center" href="#"><i
+                    <a class="dropdown-item d-flex align-items-center" href="{{ route('setting') }}"><i
                             class="mdi mdi-cog font-size-17 align-middle me-1"></i> Settings<span
                             class="badge bg-success ms-auto">11</span></a>
                     <div class="dropdown-divider"></div>

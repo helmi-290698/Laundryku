@@ -21,10 +21,20 @@ class PembayaranController extends Controller
         return $datatable->render('admin.datapembayaran', ['title' => $title]);
     }
 
-    public function invoice()
+    public function invoice($id)
     {
         $title = "Invoice";
-        return view('admin.invoice', ['title' => $title]);
+        $laundry = Laundry::where('pembayaran_id', '=', $id)->first();
+        if ($laundry->jenis_cucian == 'express') {
+            $harga = $laundry->item->itempaket->harga_express;
+        } elseif ($laundry->jenis_cucian == 'reguler') {
+            $harga = $laundry->item->itempaket->harga_reguler;
+        } else {
+            $harga = $laundry->item->itempaket->harga_oneday;
+        }
+
+        $totalBiaya = $harga + $laundry->pembayaran->biaya_lainya - $laundry->pembayaran->diskon;
+        return view('admin.invoice', ['title' => $title, 'laundry' => $laundry, 'biaya_item' => $harga, 'total_biaya' => $totalBiaya]);
     }
 
     /**
